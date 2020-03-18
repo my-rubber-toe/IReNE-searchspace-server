@@ -13,24 +13,28 @@ def visualize_map():
 
     :return:
     """
-    #search in the DB for the document
-    # add exceptions for other methods
+    #  search in the DB for the document  #
+    #  add exceptions for other methods  #
     title = ''
-    description = ''
     authors = ''
     actors = ''
-    publication_date1 = ''
-    publication_date2 = ''
+    publication_date = ''
     incident_dates = ''
     infrastructure_type = ''
     damage_type = ''
     language = ''
     tags = {}
     if request.method == 'POST':
-        title = request.form['title']
+        data = request.json
+        #DAO here
+        title = ""
+        location = ""
+        description = ""
         temp_response = {
             "document": "doc_id",
-            "title": title
+            "title": title,
+            "description": description,
+            "location": location
         }
         #DAO here
         return ApiResult(
