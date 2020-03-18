@@ -15,15 +15,15 @@ def request_access():
     """
     #add exception
     data = request.json
-    firstname = data['firstname']
-    lastname = data['lastname']
+    first_name = data['first_name']
+    last_name = data['last_name']
     email = data['email']
     #Insert DAO
 
     temp_response = {
         "response": 'Request processed',
-        "First Name": firstname,
-        "Last Name": lastname,
+        "First Name": first_name,
+        "Last Name": last_name,
         "Email": email
     }
     return ApiResult(
