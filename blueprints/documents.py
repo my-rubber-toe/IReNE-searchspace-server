@@ -1,10 +1,8 @@
-from flask import Blueprint, g, current_app, request, session, make_response, jsonify
+from flask import Blueprint, request
 from utils.responses import ApiException, ApiResult
 from utils.validators import GetDocumentsValidator, GetDocIdValidator
 from utils.exceptions import SearchSpaceApiError
-from uuid import uuid4
 
-import datetime
 
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
 

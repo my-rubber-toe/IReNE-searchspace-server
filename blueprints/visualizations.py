@@ -1,11 +1,8 @@
-from flask import Blueprint, g, current_app, request, session, make_response, jsonify
+from flask import Blueprint, request
 
 from utils.exceptions import SearchSpaceApiError
 from utils.responses import ApiException, ApiResult
 from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetDocIdValidator
-from uuid import uuid4
-
-import datetime
 
 
 bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')

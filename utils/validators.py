@@ -84,7 +84,7 @@ class GetCollaboratorRequestValidator(Schema):
 
 
 class GetComparisonValidator(Schema):
-    """ Request body schema for the endpoint /api/documents/view/<doc_id>/"""
+    """ Request body schema for the endpoint /api/visualize/comparison-graph"""
     xcat = fields.String(required=True, validate=validate.Length(min=1))
     ycat = fields.String(required=True, validate=validate.Length(min=1))
     xvalue = fields.String(required=True, validate=validate.Length(min=1))
