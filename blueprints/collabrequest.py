@@ -1,6 +1,8 @@
 from flask import Blueprint, g, current_app, request, session, make_response, jsonify
+
+from utils.exceptions import SearchSpaceApiError
 from utils.responses import ApiException, ApiResult
-from uuid import uuid4
+from utils.validators import GetCollaboratorRequestValidator
 
 import datetime
 
@@ -14,18 +16,11 @@ def request_access():
     :return:
     """
     #add exception
-    data = request.json
-    first_name = data['first_name']
-    last_name = data['last_name']
-    email = data['email']
-    #Insert DAO
-
-    temp_response = {
-        "response": 'Request processed',
-        "First Name": first_name,
-        "Last Name": last_name,
-        "Email": email
-    }
+    if request.json == {}:
+        raise SearchSpaceApiError(msg='No request body data.', status=400)
+    body = GetCollaboratorRequestValidator().load(request.json)
+    #  DAO here  #
     return ApiResult(
-        value=temp_response
+        message='Valid Data', given_data=body
     )
+

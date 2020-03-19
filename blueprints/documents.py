@@ -1,5 +1,7 @@
 from flask import Blueprint, g, current_app, request, session, make_response, jsonify
 from utils.responses import ApiException, ApiResult
+from utils.validators import GetDocumentsValidator, GetDocIdValidator
+from utils.exceptions import SearchSpaceApiError
 from uuid import uuid4
 
 import datetime
@@ -7,17 +9,24 @@ import datetime
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
 
 #TODO verify sessions
-@bp.route('/', methods=['GET'])
+@bp.route('/', methods=['GET', 'POST'])
 def list_documents():
     """
 
     :return:
     """
-    temp_response = {
-        "response": 'List of documents metadata fitting the criteria in the request body.'
-    }
+    if request.method == 'GET':
+        #  getalldocuments
+        #  DAO  #
+        return ApiResult(
+            message='All Docs'
+        )
+    if request.json == {}:
+        raise SearchSpaceApiError(msg='No request body data.', status=400)
+    body = GetDocumentsValidator().load(request.json)
+    #  DAO here  #
     return ApiResult(
-        value=temp_response
+        message='Valid Data', given_data=body
     )
 
 
@@ -27,13 +36,10 @@ def get_document(doc_id):
 
     :return:
     """
-    #search in the DB for the document
+    identification = GetDocIdValidator().load(doc_id)
+    #  search in the DB for the document  #
 
-    temp_response = {
-        "document": 'document json doc_id',
-        "doc_id": doc_id
-    }
     return ApiResult(
-        value=temp_response
+        message='the id is '+identification
     )
 

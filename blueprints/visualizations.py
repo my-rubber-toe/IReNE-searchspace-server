@@ -1,8 +1,12 @@
 from flask import Blueprint, g, current_app, request, session, make_response, jsonify
+
+from utils.exceptions import SearchSpaceApiError
 from utils.responses import ApiException, ApiResult
+from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetDocIdValidator
 from uuid import uuid4
 
 import datetime
+
 
 bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
 
@@ -15,38 +19,19 @@ def visualize_map():
     """
     #  search in the DB for the document  #
     #  add exceptions for other methods  #
-    title = ''
-    authors = ''
-    actors = ''
-    publication_date = ''
-    incident_dates = ''
-    infrastructure_type = ''
-    damage_type = ''
-    language = ''
-    tags = {}
-    if request.method == 'POST':
-        data = request.json
-        #DAO here
-        title = ""
-        location = ""
-        description = ""
-        temp_response = {
-            "document": "doc_id",
-            "title": title,
-            "description": description,
-            "location": location
-        }
-        #DAO here
+    if request.method == 'GET':
+        #  getalldocuments
+        #  DAO  #
         return ApiResult(
-            value=temp_response
+            message='All Docs'
         )
-    else:
-        temp_response = {
-            "document": "error"
-        }
-        return ApiResult(
-            value=temp_response
-        )
+    if request.json == {}:
+        raise SearchSpaceApiError(msg='No request body data.', status=400)
+    body = GetDocumentsValidator().load(request.json)
+    #  DAO here  #
+    return ApiResult(
+        message='Valid Data', given_data=body
+    )
 
 
 @bp.route('/comparison-graph', methods=['GET', 'POST'])
@@ -57,28 +42,12 @@ def visualize_comparison():
     """
     # add exceptions for other methods
     if request.method == 'POST':
-        data = request.json
-        xcat = data['xcategory']
-        ycat = data['ycategory']
-        xvalue = data['xvalue']
-        yvalue = data['ycategory']
-        #DAO here
-        temp_response = {
-            "category of x": xcat,
-            "x value": xvalue,
-            "category of y": ycat,
-            "y value": yvalue,
-            "message": "requested"
-        }
+        if request.json == {}:
+            raise SearchSpaceApiError(msg='No request body data.', status=400)
+        doc_id = GetComparisonValidator().load(request.json)
+        #  DAO here  #
         return ApiResult(
-            value=temp_response
-        )
-    else:
-        temp_response = {
-            "document": "error"
-        }
-        return ApiResult(
-            value=temp_response
+            message='id of document', given_data=doc_id
         )
 
 
@@ -89,20 +58,10 @@ def visualize_timeline():
     """
     # add exceptions for other methods
     if request.method == 'POST':
-        data = request.json
-        doc_id = data['doc_id']
-        #DAO here
-        temp_response = {
-            "document": doc_id,
-            "message": "requested timeline"
-        }
+        if request.json == {}:
+            raise SearchSpaceApiError(msg='No request body data.', status=400)
+        body = GetDocIdValidator().load(request.json)
+        #  DAO here  #
         return ApiResult(
-            value=temp_response
-        )
-    else:
-        temp_response = {
-            "document": "error"
-        }
-        return ApiResult(
-            value=temp_response
+            message='Data for visualize', given_data=body
         )
