@@ -80,63 +80,63 @@ def register_error_handlers(app):
     Arguments:
         app {flask application} -- application instance
     """
-    if app.config['DEBUG']:
-        # If debug true, then return the whole error stack
-        @app.errorhandler(SearchSpaceError)
-        def handle_error(error):
-            return ApiException(
-                _type=error.__class__.__name__,
-                message=error.error_stack,
-                status=error.status
-            )
-    else:
-        @app.errorhandler(SearchSpaceError)
-        def handle_general_error(error):
-            return ApiException(
-                _type=error.__class__.__name__,
-                message=error.msg,
-                status=error.status
-            )
-
-        @app.errorhandler(SearchSpaceApiError)
-        def handle_api_error(error):
-            # send email to service desk
-            return ApiException(
-                _type=error.__class__.__name__,
-                message=error.msg,
-                status=error.status
-            )
-
-        @app.errorhandler(Exception)
-        def handle_unexpected_error(error):
-            SearchSpaceError(
-                err=error,
-                msg='An unexpected error has occurred.',
-                status=500
-            ).log()
-            return ApiException(
-                _type='UnexpectedException',
-                message='An unexpected error has occurred. Please verify error logs',
-                status=500
-            )
-
-    app.register_error_handler(
-        400,
-        lambda err: ApiException(message=str(
-            err), status=400, _type='Bad request')
-    )
-
-    app.register_error_handler(
-        404,
-        lambda err: ApiException(message=str(
-            err), status=404, _type='Not found')
-    )
-
-    app.register_error_handler(
-        405,
-        lambda err: ApiException(message=str(
-            err), status=405, _type='Request method')
-    )
+    # if app.config['DEBUG']:
+    #     # If debug true, then return the whole error stack
+    #     @app.errorhandler(SearchSpaceError)
+    #     def handle_error(error):
+    #         return ApiException(
+    #             _type=error.__class__.__name__,
+    #             message=error.error_stack,
+    #             status=error.status
+    #         )
+    # else:
+    #     @app.errorhandler(SearchSpaceError)
+    #     def handle_general_error(error):
+    #         return ApiException(
+    #             _type=error.__class__.__name__,
+    #             message=error.msg,
+    #             status=error.status
+    #         )
+    #
+    #     @app.errorhandler(SearchSpaceApiError)
+    #     def handle_api_error(error):
+    #         # send email to service desk
+    #         return ApiException(
+    #             _type=error.__class__.__name__,
+    #             message=error.msg,
+    #             status=error.status
+    #         )
+    #
+    #     @app.errorhandler(Exception)
+    #     def handle_unexpected_error(error):
+    #         SearchSpaceError(
+    #             err=error,
+    #             msg='An unexpected error has occurred.',
+    #             status=500
+    #         ).log()
+    #         return ApiException(
+    #             _type='UnexpectedException',
+    #             message='An unexpected error has occurred. Please verify error logs',
+    #             status=500
+    #         )
+    #
+    # app.register_error_handler(
+    #     400,
+    #     lambda err: ApiException(message=str(
+    #         err), status=400, _type='Bad request')
+    # )
+    #
+    # app.register_error_handler(
+    #     404,
+    #     lambda err: ApiException(message=str(
+    #         err), status=404, _type='Not found')
+    # )
+    #
+    # app.register_error_handler(
+    #     405,
+    #     lambda err: ApiException(message=str(
+    #         err), status=405, _type='Request method')
+    # )
 
 
 def register_base_url(app: Flask):
