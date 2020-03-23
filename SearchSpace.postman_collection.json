@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "1603e35e-b7ac-4cd7-b370-945383eabeef",
+		"name": "SearchSpace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "collab-request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"first_name\": \"Pedro\",\n\"last_name\": \"Juan\",\n\"email\": \"hola@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/collab-request/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"collab-request",
+						""
+					]
+				},
+				"description": "Request of collaboration in SearchSpace"
+			},
+			"response": []
+		},
+		{
+			"name": "documents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/documents",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"documents"
+					]
+				},
+				"description": "View all documents"
+			},
+			"response": []
+		},
+		{
+			"name": "view document",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/documents/view/1",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"documents",
+						"view",
+						"1"
+					]
+				},
+				"description": "View on document by id"
+			},
+			"response": []
+		},
+		{
+			"name": "visualize timeline",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"doc_id\": \"1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/visualize/timeline",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"visualize",
+						"timeline"
+					]
+				},
+				"description": "request timeline by doc_id"
+			},
+			"response": []
+		},
+		{
+			"name": "visualize x vs y",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"xcategory\": \"earthquakes\",\n\"xvalue\": \"5.0\",\n\"ycategory\": \"earthquakes\",\n\"yvalue\": \"5.0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/visualize/comparison-graph",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"visualize",
+						"comparison-graph"
+					]
+				},
+				"description": "x vs y info"
+			},
+			"response": []
+		},
+		{
+			"name": "documents post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"general\":[\n\t\t{\n\t\t\t\"authors\": \n\t\t\t[\n\t\t\t\t{\n\t\t\t\t\t\"first_name\":\"Ale\",\n\t\t\t\t\t\"last_name\":\"Vas\"\n\t\t\t\t\t\n\t\t\t\t},\n\t\t\t\t{\"first_name\":\"juan\"\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"actors\": \n\t\t\t[\n                {\n                    \"first_name\": \"name1\",\n                    \"last_name\": \"lastname1\",\n                    \"role\": \"some\"\n                }\n            ],\n            \"title\": \"Some Title\",\n            \"description\": \"Hello my friend\"\n\t}\n\t],\n\t\"infrastructure_type\": [\"building\", \"bridge\"],\n\t\"publication_date\": [\"2020-10-03\", \"2020-10-13\"],\n    \"tags\": [\"tag1\", \"tag2\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/documents/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"documents",
+						""
+					]
+				},
+				"description": "Filter documents by parameters in the body"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
