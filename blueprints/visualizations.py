@@ -41,10 +41,10 @@ def visualize_comparison():
     if request.method == 'POST':
         if request.json == {}:
             raise SearchSpaceApiError(msg='No request body data.', status=400)
-        doc_id = GetComparisonValidator().load(request.json)
+        body = GetComparisonValidator().load(request.json)
         #  DAO here  #
         return ApiResult(
-            message='id of document', given_data=doc_id
+            message='id of document', given_data=body
         )
 
 

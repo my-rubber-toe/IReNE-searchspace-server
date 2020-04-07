@@ -7,7 +7,7 @@ from utils.exceptions import SearchSpaceApiError
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
 
 #TODO verify sessions
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET'])
 def list_documents():
     """
 
@@ -34,10 +34,10 @@ def get_document(doc_id):
 
     :return:
     """
-    identification = GetDocIdValidator().load(doc_id)
+    # identification = GetDocIdValidator().load(doc_id)
     #  search in the DB for the document  #
 
     return ApiResult(
-        message='the id is '+identification
+        message='the id is '+doc_id
     )
 
