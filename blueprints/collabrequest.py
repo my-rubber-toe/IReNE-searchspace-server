@@ -18,6 +18,7 @@ def request_access():
     body = GetCollaboratorRequestValidator().load(request.json)
     #  DAO here  #
     return ApiResult(
+        status=201,
         message='Valid Data', given_data=body
     )
 
