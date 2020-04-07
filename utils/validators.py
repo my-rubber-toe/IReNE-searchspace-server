@@ -69,18 +69,18 @@ class GetDocumentsValidator(Schema):
 
 class GetDocIdValidator(Schema):
     """ Request body schema for the endpoint /api/documents/view/<doc_id>/"""
-    doc_id = fields.String(required=True, validate=validate.Length(min=1))
+    doc_id = fields.String(required=True, validate=validate.Length(min=5))
 
 
 class GetCollaboratorRequestValidator(Schema):
     """ Request body schema for the endpoint /api/collabrequest/"""
     first_name = fields.String(required=True, validate=validate.Length(min=1))
-    last_name = fields.String(required=True, validate=validate.Length(min=1))
+    last_name = fields.String(required=True, validate=[
+        validate.Length(min=1)])
     email = fields.Email(
         required=True,
-        validate=validate.Regexp("^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$")
     )
-    faculty = fields.String(required=True, validate=validate.Length(min=1))
+    faculty = fields.String(required=False, validate=validate.Length(min=1))
 
 
 class GetComparisonValidator(Schema):
