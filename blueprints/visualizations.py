@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-
+from DAOs.dao_SS import *
 from utils.exceptions import SearchSpaceApiError
 from utils.responses import ApiResult
 from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetDocIdValidator
@@ -7,7 +7,7 @@ from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetD
 bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
 
 #TODO verify sessions
-@bp.route('/map', methods=['GET', 'POST'])
+@bp.route('/map', methods=['GET'])
 def visualize_map():
     """
 
@@ -30,7 +30,7 @@ def visualize_map():
     )
 
 
-@bp.route('/comparison-graph', methods=['GET', 'POST'])
+@bp.route('/comparison-graph', methods=['GET'])
 def visualize_comparison():
     """
 
@@ -47,17 +47,13 @@ def visualize_comparison():
         )
 
 
-@bp.route('/timeline', methods=['GET', 'POST'])
+@bp.route('/timeline/', methods=['GET'])
 def visualize_timeline():
     """
     :return:
     """
-    # add exceptions for other methods
-    if request.method == 'POST':
-        if request.json == {}:
-            raise SearchSpaceApiError(msg='No request body data.', status=400)
-        body = GetDocIdValidator().load(request.json)
-        #  DAO here  #
-        return ApiResult(
-            message='Data for visualize', given_data=body
-        )
+    # add dao
+    timeline = get_timeline_docs()
+    return ApiResult(
+        message='Data for visualize', given_data=timeline
+    )

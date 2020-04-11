@@ -1,5 +1,4 @@
 from flask import Blueprint
-
 from utils.responses import ApiResult
 from DAOs.dao_SS import *
 
@@ -14,10 +13,13 @@ def request_filters():
     """
     #  add exception  #
     #  DAO here  #
-    damages = json.load(get_damage_list())
-    damages
+    filters = {'damages': [], 'tags': [], 'infrastructures': [], 'creators': []}
+    filters['damages'].extend(get_damage_list())
+    filters['tags'].extend(get_tags_list())
+    filters['infrastructures'].extend(get_infrastructure_list())
+    filters['creators'].extend(get_collaborators())
     return ApiResult(
-        message=damages
+        message=filters
     )
 
 @bp.route('/tags')
@@ -29,7 +31,7 @@ def get_tags():
     )
 
 
-@bp.route('/infrastructure')
+@bp.route('/infrastructures')
 def get_infrastructures():
     #  add exception  #
     #  DAO here  #
@@ -38,7 +40,7 @@ def get_infrastructures():
     )
 
 
-@bp.route('/damage')
+@bp.route('/damages')
 def get_damages():
     #  add exception  #
     #  DAO here  #
