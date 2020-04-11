@@ -1,9 +1,10 @@
 from flask import Blueprint, request
 
 from DAOs.dao_SS import *
-from utils.exceptions import SearchSpaceApiError
+from utils.exceptions import SearchSpaceRequestError
 from utils.responses import ApiResult
 from utils.validators import GetDocumentsValidator
+from mongoengine import errors
 from DAOs.dao_SS import *
 
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
@@ -18,17 +19,10 @@ def list_documents():
     if request.method == 'GET':
         #  getalldocuments
         #  DAO  #
-
+        docs = get_docs()
         return ApiResult(
-            message=get_docs()
+            message=docs
         )
-    if request.json == {}:
-        raise SearchSpaceApiError(msg='No request body data.', status=400)
-    body = GetDocumentsValidator().load(request.json)
-    #  DAO here  #
-    return ApiResult(
-        message='Valid Data', given_data=body
-    )
 
 
 @bp.route('/view/<doc_id>', methods=['GET'])
@@ -39,8 +33,10 @@ def get_document(doc_id):
     """
     # identification = GetDocIdValidator().load(doc_id)
     #  search in the DB for the document  #
-
-    return ApiResult(
-        message=get_doc(doc_id)
-    )
+    try:
+        return ApiResult(
+            message=get_doc(doc_id)
+        )
+    except errors.DoesNotExist as e:
+        raise SearchSpaceRequestError(e)
 
