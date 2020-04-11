@@ -1,4 +1,5 @@
 from create_app import create_app
+from database.init_db import *
 '''
 To run this server in development
     $ export FLASK_APP=`pwd`/run.py
@@ -15,6 +16,5 @@ corresponding database queries files and database driver
 '''
 # Search for the config file and add it to the
 app = create_app('config.development')
-
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)

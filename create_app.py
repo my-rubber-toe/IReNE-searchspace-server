@@ -1,10 +1,7 @@
+from flask import Flask
 from werkzeug.utils import find_modules, import_string
-from flask import Flask, request, current_app
 
-from utils.exceptions import SearchSpaceError, SearchSpaceApiError
 from utils.responses import ApiException, ApiResult
-
-from flask_cors import CORS
 
 
 class ApiFlask(Flask):

@@ -1,8 +1,10 @@
 from flask import Blueprint, request
-from utils.responses import ApiException, ApiResult
-from utils.validators import GetDocumentsValidator, GetDocIdValidator
-from utils.exceptions import SearchSpaceApiError
 
+from DAOs.dao_SS import *
+from utils.exceptions import SearchSpaceApiError
+from utils.responses import ApiResult
+from utils.validators import GetDocumentsValidator
+from DAOs.dao_SS import *
 
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
 
@@ -16,8 +18,9 @@ def list_documents():
     if request.method == 'GET':
         #  getalldocuments
         #  DAO  #
+
         return ApiResult(
-            message='All Docs'
+            message=get_docs()
         )
     if request.json == {}:
         raise SearchSpaceApiError(msg='No request body data.', status=400)
@@ -38,6 +41,6 @@ def get_document(doc_id):
     #  search in the DB for the document  #
 
     return ApiResult(
-        message='the id is '+doc_id
+        message=get_doc(doc_id)
     )
 

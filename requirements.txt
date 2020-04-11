@@ -1,3 +1,5 @@
+mongomock
+mongoengine
 flask
 flask-cors
 werkzeug

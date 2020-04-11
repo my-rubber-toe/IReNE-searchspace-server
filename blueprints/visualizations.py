@@ -1,9 +1,8 @@
 from flask import Blueprint, request
 
 from utils.exceptions import SearchSpaceApiError
-from utils.responses import ApiException, ApiResult
+from utils.responses import ApiResult
 from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetDocIdValidator
-
 
 bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
 
