@@ -3,8 +3,7 @@ from flask import Blueprint, request
 from DAOs.dao_SS import *
 from utils.exceptions import SearchSpaceRequestError
 from utils.responses import ApiResult
-from utils.validators import GetDocumentsValidator
-from mongoengine import errors
+from mongoengine.errors import DoesNotExist,ValidationError
 from DAOs.dao_SS import *
 
 bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
@@ -25,18 +24,17 @@ def list_documents():
         )
 
 
-@bp.route('/view/<doc_id>', methods=['GET'])
+@bp.route('/view/<string:doc_id>', methods=['GET'])
 def get_document(doc_id):
     """
 
     :return:
     """
-    # identification = GetDocIdValidator().load(doc_id)
     #  search in the DB for the document  #
     try:
         return ApiResult(
             message=get_doc(doc_id)
         )
-    except errors.DoesNotExist as e:
-        raise SearchSpaceRequestError(e)
+    except (DoesNotExist, ValidationError) as e:
+        raise SearchSpaceRequestError(err=e, msg="Invalid Id", status=409)
 

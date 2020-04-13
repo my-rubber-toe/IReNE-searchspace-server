@@ -13,11 +13,11 @@ def request_filters():
     """
     #  add exception  #
     #  DAO here  #
-    filters = {'damages': [], 'tags': [], 'infrastructures': [], 'creators': []}
+    filters = {'damages': [], 'tags': [], 'infrastructures': [], 'authors': []}
     filters['damages'].extend(get_damage_list())
     filters['tags'].extend(get_tags_list())
     filters['infrastructures'].extend(get_infrastructure_list())
-    filters['creators'].extend(get_collaborators())
+    filters['authors'].extend(get_collaborators())
     return ApiResult(
         message=filters
     )
@@ -49,7 +49,7 @@ def get_damages():
     )
 
 
-@bp.route('/creators')
+@bp.route('/authors')
 def get_creators():
     #  add exception  #
     #  DAO here  #

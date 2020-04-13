@@ -1,5 +1,4 @@
 from create_app import create_app
-from database.init_db import *
 '''
 To run this server in development
     $ export FLASK_APP=`pwd`/run.py

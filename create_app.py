@@ -1,8 +1,7 @@
 from flask import Flask
 from werkzeug.utils import find_modules, import_string
-
 from utils.responses import ApiException, ApiResult
-
+from database import init_db
 
 class ApiFlask(Flask):
     """
@@ -39,9 +38,7 @@ def create_app(config=None):
         # TODO: Setup CORS for all endpoints
         # register_cors(app)
 
-        # TODO: Setup database configuration
-        # db.init_app(app)
-
+        # Testing with mock DB
         # Setup validator plugins
         # validator.init_app(app)
 

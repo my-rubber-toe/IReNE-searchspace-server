@@ -27,7 +27,6 @@ class General(Schema):
     title = fields.String(required=False, validate=validate.Length(min=1))
 
 
-
 class GetDocumentsValidator(Schema):
     """ Request body schema for the endpoint /api/documents"""
     general = fields.List(fields.Nested(General, required=False), required=False)
@@ -69,16 +68,20 @@ class GetDocumentsValidator(Schema):
 
 class GetDocIdValidator(Schema):
     """ Request body schema for the endpoint /api/documents/view/<doc_id>/"""
-    doc_id = fields.String(required=True, validate=validate.Length(min=5))
+    doc_id = fields.String(required=True, validate=validate.Length(equal=24))
 
 
 class GetCollaboratorRequestValidator(Schema):
     """ Request body schema for the endpoint /api/collabrequest/"""
-    first_name = fields.String(required=True, validate=validate.Length(min=1))
+    first_name = fields.String(required=True, validate=validate.Length(min=1, max=30))
     last_name = fields.String(required=True, validate=[
-        validate.Length(min=1)])
+        validate.Length(min=1, max=30)])
     email = fields.Email(
         required=True,
+        validate=[
+            validate.Regexp("^[\w\.]+@(upr.edu)$"),
+            validate.Length(max=50)
+        ]
     )
     faculty = fields.String(required=False, validate=validate.Length(min=1))
 

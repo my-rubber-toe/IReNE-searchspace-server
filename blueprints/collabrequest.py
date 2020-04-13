@@ -21,7 +21,7 @@ def request_access():
     try:
         body = GetCollaboratorRequestValidator().load(request.json)
     except marshmallow.ValidationError as e:
-        raise SearchSpaceRequestValidationError(e)
+        raise SearchSpaceRequestValidationError(e, msg='Invalid Data')
     first_name = body.get('first_name')
     last_name = body.get('last_name')
     email = body.get('email')
@@ -31,6 +31,6 @@ def request_access():
             status=201,
             message='Valid Data')
     except errors.NotUniqueError as e:
-        raise SearchSpaceRequestError(e)
+        raise SearchSpaceRequestError(e, msg='Request already created')
 
 
