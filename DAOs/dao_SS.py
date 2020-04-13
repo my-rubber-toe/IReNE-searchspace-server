@@ -86,3 +86,24 @@ def get_tags_list():
     tag_objects = Tag.objects()
     return json.loads(tag_objects.to_json())
 
+def get_timeline_docs():
+    timeline_docs = DocumentCase.objects().only('id', 'title', 'timeline')
+    return json.loads(timeline_docs.to_json())
+
+
+def get_comparison_docs():
+    comparison_docs = DocumentCase.objects.filter(published=True).only('id', 'title', 'tagsDoc',
+    'infrasDocList', 'damageDocList', 'creationDate',
+    'incidentDate')
+    return json.loads(comparison_docs.to_json())
+
+
+def get_map_docs():
+    map_docs = DocumentCase.objects.filter(published=True).exclude('timeline', 'actor',
+    'creatoriD', 'description', 'section', 'published')
+    return json.loads(map_docs.to_json())
+	
+def get_docs():
+    get_doc = DocumentCase.objects.filter(published=True).exclude('timeline', 'actor',
+    'creatoriD', 'description', 'section', 'published')
+    return json.loads(get_doc.to_json())
