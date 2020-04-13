@@ -3,9 +3,9 @@ import datetime
 import regex
 
 #Connection to the Database
-#connect('IReNEdb')
+connect('IReNEdb')
 #connec the db for testing purposes
-connect('IReNEdb', host='mongomock://localhost', alias='IReNEdb')
+#connect('IReNEdb', host='mongomock://localhost:27017')
 
 
 class Collaborator(Document):
