@@ -1,5 +1,5 @@
 from mongoengine import *
-from schema_DB import *
+from DAOs.schema_DB import *
 
 #Fills the db with Collaborators mock-data
 collab1 = Collaborator(first_name="Jainel", last_name="Torres", email="jainel.torres@upr.edu", approved=True)

@@ -1,7 +1,7 @@
 from flask import Flask
 from werkzeug.utils import find_modules, import_string
 from utils.responses import ApiException, ApiResult
-from database import init_db
+from DAOs import init_db_test
 
 class ApiFlask(Flask):
     """
