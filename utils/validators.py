@@ -79,7 +79,7 @@ class GetCollaboratorRequestValidator(Schema):
     email = fields.Email(
         required=True,
         validate=[
-            validate.Regexp("^[\w\.]+@(upr.edu)$"),
+            validate.Regexp("(.*)\.(.*)@upr\.edu"),
             validate.Length(max=50)
         ]
     )
