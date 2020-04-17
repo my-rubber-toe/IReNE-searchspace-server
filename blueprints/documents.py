@@ -10,12 +10,15 @@ bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
 @bp.route('/', methods=['GET'])
 def list_documents():
     """
+    GET request to return the metadata of all documents.
 
-    :return:
+    Returns
+    -------
+    Message: json
+       the metadata of all documents and status code 200.
+
     """
     if request.method == 'GET':
-        #  getalldocuments
-        #  DAO  #
         docs = get_docs()
         return ApiResult(
             message=docs
@@ -26,7 +29,25 @@ def list_documents():
 def get_document(doc_id):
     """
 
-    :return:
+    GET request to return all the information about a specific document.
+
+    Parameters
+    ----------
+    doc_id
+        id of the requested document
+
+    Returns
+    -------
+    Message: json
+        Information of the requested document and status code 200.
+
+    Raises
+    ------
+    Validation Error
+        If one of the fields is not valid with the specified schema of the Database
+    DoesNotExists
+        If the requested documents not exists on the Database
+
     """
     #  search in the DB for the document  #
     try:

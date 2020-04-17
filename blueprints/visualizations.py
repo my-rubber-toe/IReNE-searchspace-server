@@ -8,8 +8,13 @@ bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
 @bp.route('/map', methods=['GET'])
 def visualize_map():
     """
+    GET request to return the metadata of all documents but only the fields fields needed for the map.
 
-    :return:
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the map
+
     """
     #  search in the DB for the document  #
     #  add exceptions for other methods  #
@@ -23,8 +28,13 @@ def visualize_map():
 @bp.route('/comparison-graph', methods=['GET'])
 def visualize_comparison():
     """
+    GET request to return the metadata of all documents but only the fields fields needed for the xy plot.
 
-    :return:
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the xy plot
+
     """
     #  DAO here  #
     comparison = get_comparison_docs()
@@ -36,7 +46,13 @@ def visualize_comparison():
 @bp.route('/timeline', methods=['GET'])
 def visualize_timeline():
     """
-    :return:
+    GET request to return the metadata of all documents but only the fields fields needed for the timeline.
+
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the timeline
+
     """
     # add dao
     timeline = get_timeline_docs()

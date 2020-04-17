@@ -15,10 +15,19 @@ def request_access():
     """
     This route is for the creation of a Collaborator Request in the database. In the body of the POST request is
     required to send the first_name, last_name and email for the creation of the request.
-    :return: A message with status code 201 if the request was created, if a error occurred will return a 500 code with
-    the message "Request already created" or "Invalid Data" if the information of the body is invalid.
+
+    Returns
+    -------
+    A message with status code 201 if the request was created
+    A 500  status code with the message "Request already created" or "Invalid Data" if the information of the body is invalid.
+
+    Raises
+    ------
+    Validation Error
+        If one of the fields is not valid as specified with the validators of the server
+    NotUniqueError
+        If the request already is created in the database
     """
-    #  add exception  #
     try:
         body = GetCollaboratorRequestValidator().load(request.json)
     except (marshmallow.ValidationError, ValidationError) as e:
