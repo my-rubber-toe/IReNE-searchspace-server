@@ -1,5 +1,8 @@
+mongomock
+mongoengine
 flask
 flask-cors
 werkzeug
-python-dotenv
 commitizen
+marshmallow
+python-dotenv

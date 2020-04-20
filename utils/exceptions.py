@@ -1,9 +1,13 @@
 import datetime
+import logging
+
+logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger('SearchSpaceLogger')
 
 
 class SearchSpaceError(Exception):
     """Base Audit Manager Error Class"""
-    error_type = 'SearchSpace BaseError'
+    error_type = 'SearchSpaceError'
 
     def __init__(self, err=None, msg='Error', status=500, user='', action=None):
         self.msg = msg
@@ -45,4 +49,14 @@ class SearchSpaceError(Exception):
 
 class SearchSpaceApiError(SearchSpaceError):
     """Audit Manager API error"""
-    error_type = 'ApiError'
+    error_type = 'SearchSpaceApiError'
+
+
+class SearchSpaceRequestValidationError(SearchSpaceError):
+    """Audit Manager API error"""
+    error_type = 'SearchSpaceRequestValidationError'
+
+
+class SearchSpaceRequestError(SearchSpaceError):
+    """Audit Manager API error"""
+    error_type = 'SearchSpaceRequestError'
