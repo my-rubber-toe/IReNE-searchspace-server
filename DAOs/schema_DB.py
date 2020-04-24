@@ -3,11 +3,11 @@ import datetime
 import re
 
 # Connection to the Database
-# connect('IReNEdb')
+connect('IReNEdb')
 
 
 # connect the db for testing purposes
-connect('IReNEdb', host='mongomock://localhost:27017')
+# connect('IReNEdb', host='mongomock://localhost:27017')
 
 
 class Collaborator(Document):

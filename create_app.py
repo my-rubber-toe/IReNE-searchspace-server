@@ -1,7 +1,8 @@
 from flask import Flask
+from flask_cors import CORS
 from werkzeug.utils import find_modules, import_string
 from utils.responses import ApiException, ApiResult
-from DAOs import init_db_test
+# from DAOs import init_db_test
 
 class ApiFlask(Flask):
     """
@@ -36,7 +37,7 @@ def create_app(config=None):
         # app.secret_key = app.config['SECRET_KEY']
 
         # TODO: Setup CORS for all endpoints
-        # register_cors(app)
+        register_cors(app)
 
         # Testing with mock DB
         # Setup validator plugins
@@ -133,7 +134,7 @@ def register_error_handlers(app):
     # )
 
 
-def register_base_url(app: Flask):
+def register_base_url(app):
     @app.route('/')
     @app.route('/searchspace/')
     @app.route(app.config['PREFIX_URL'])
@@ -154,35 +155,39 @@ def register_request_teardown(app):
 
     pass
 
-# def register_cors(app: Flask):
-#     """
-#         Setup CORS , cross-origin-resource-sharing settings
-#     """
 
-#     origins_list = '*'
+def register_cors(app: Flask):
+    """
+        Setup CORS , cross-origin-resource-sharing settings
+    """
 
-#     methods_list= ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS']
+    origins_list = '*'
 
-#     allowed_headers_list = [
-#         'Access-Control-Allow-Credentials',
-#         'Access-Control-Allow-Headers',
-#         'Access-Control-Allow-Methods',
-#         'Access-Control-Allow-Origin',
-#         'Content-Type',
-#         'Authorization',
-#         'Content-Disposition',
-#         'Referrer-Policy',
-#         'Strict-Transport-Security',
-#         'X-Frame-Options',
-#         'X-Xss-Protection',
-#         'X-Content-Type-Options',
-#         'X-Permitted-Cross-Domain-Policies'
-#     ]
+    methods_list = ['GET', 'POST', 'OPTIONS']
 
-#     CORS(
-#         app=app,
-#         resources={r"/api/*": {"origins": origins_list}},
-#         methods=methods_list,
-#         allowed_headers=allowed_headers_list,
-#         supports_credentials=True
-#     )
+    allowed_headers_list = [
+        'Access-Control-Allow-Credentials',
+        'Access-Control-Allow-Headers',
+        'Access-Control-Allow-Methods',
+        'Access-Control-Allow-Origin',
+        'Content-Type',
+        'Authorization',
+        'Content-Disposition',
+        'Origin',
+        
+        'Referrer-Policy',
+        'Strict-Transport-Security',
+        'X-Frame-Options',
+        'X-Xss-Protection',
+        'X-Content-Type-Options',
+        'X-Permitted-Cross-Domain-Policies'
+    ]
+
+    CORS(
+        app=app,
+        resources={r"/api/*": {"origins": origins_list}},
+        methods=methods_list,
+        allowed_headers=allowed_headers_list,
+        supports_credentials=True,
+
+    )
