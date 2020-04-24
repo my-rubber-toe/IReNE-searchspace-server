@@ -141,16 +141,8 @@ def register_error_handlers(app):
 
 def register_base_url(app: Flask):
     @app.route('/')
-    @app.route('/searchspace/')
-    @app.route(app.config['PREFIX_URL'])
     def api():
-        return ApiResult(
-            {
-                'message': 'You have reached the SearchSpace API. To make other requests'
-                           ' please use all routes under /SearchSpace/api'
-            },
-            status=200
-        )
+        return ApiResult(message='You have reached the SearchSpace API. To make other requests please use all routes under /searchSpace/api')
 
 
 def register_request_teardown(app):

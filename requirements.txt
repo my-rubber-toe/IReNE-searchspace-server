@@ -4,3 +4,4 @@ werkzeug
 commitizen
 marshmallow
 python-dotenv
+gunicorn
