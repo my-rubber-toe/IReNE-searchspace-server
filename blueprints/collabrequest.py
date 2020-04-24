@@ -29,11 +29,12 @@ def request_access():
         If the request already is created in the database
     """
     try:
+        print(request.json)
         body = GetCollaboratorRequestValidator().load(request.json)
     except (marshmallow.ValidationError, ValidationError) as e:
         raise SearchSpaceRequestValidationError(e, msg='Invalid Data')
-    first_name = body.get('first_name')
-    last_name = body.get('last_name')
+    first_name = body.get('firstName')
+    last_name = body.get('lastName')
     email = body.get('email')
     try:
         post_access_request(first_name=first_name, last_name=last_name, email=email)

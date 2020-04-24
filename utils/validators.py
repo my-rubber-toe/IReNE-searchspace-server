@@ -88,8 +88,8 @@ class GetCollaboratorRequestValidator(Schema):
     Validation Error
         If one of the fields is not valid
     """
-    first_name = fields.String(required=True, validate=validate.Length(min=1, max=30))
-    last_name = fields.String(required=True, validate=[
+    firstName = fields.String(required=True, validate=validate.Length(min=1, max=30))
+    lastName = fields.String(required=True, validate=[
         validate.Length(min=1, max=30)])
     email = fields.Email(
         required=True,
