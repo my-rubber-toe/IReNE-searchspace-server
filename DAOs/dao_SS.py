@@ -54,17 +54,9 @@ def get_doc_tag_type(tag):
 
 
 #possibly not going to be used
-def get_doc_creators():
-    get_docs = DocumentCase.objects()
-    get_creators_ids = []
-    for doc in get_docs:
-        get_creators_ids.append(doc.creatoriD)
-    creators_names = []
-    for idCollab in get_creators_ids:
-
-        get_creator = Collaborator.objects.get(id = idCollab)
-        creators_names.append( get_creator.first_name + " " + get_creator.last_name)
-    return creators_names
+def get_doc_creator(collabId):
+    get_creator = Collaborator.objects().only('first_name', 'last_name', 'email').get(id=collabId)
+    return json.loads(get_creator.to_json())
 
 
 def get_collaborators():

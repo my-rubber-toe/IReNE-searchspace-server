@@ -56,8 +56,12 @@ def get_document(doc_id):
     """
     #  search in the DB for the document  #
     try:
+        doc = get_doc(doc_id)
+        creatorInfo = get_doc_creator(doc['creatoriD'])
+        doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
+        doc['creatorEmail'] = (creatorInfo['email'])
         return ApiResult(
-            message=get_doc(doc_id)
+            message=doc
         )
     except (DoesNotExist, ValidationError) as e:
         raise SearchSpaceRequestError(err=e, msg="Invalid Id", status=409)
