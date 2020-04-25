@@ -21,7 +21,9 @@ def request_filters():
     filters['damages'].extend(get_damage_list())
     filters['tags'].extend(get_tags_list())
     filters['infrastructures'].extend(get_infrastructure_list())
-    filters['authors'].extend(get_collaborators())
+    collaborators = get_collaborators()
+    for author in collaborators:
+        filters['authors'].append(author['first_name'] + " " + author['last_name'])
     return ApiResult(
         message=filters
     )
@@ -89,6 +91,9 @@ def get_creators():
 
     """
     #  DAOs to get the info  #
+    authors = get_collaborators()
+    for author in authors:
+        author['fullName'] = author['first_name'] + " " + author['last_name']
     return ApiResult(
-        message=get_collaborators()
+        message=authors
     )

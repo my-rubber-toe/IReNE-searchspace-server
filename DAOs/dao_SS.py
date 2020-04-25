@@ -17,7 +17,7 @@ def get_docs():
         Returns the list of documents
     """
     get_doc = DocumentCase.objects(published=True).exclude('timeline', 'actor',
-    'creatoriD', 'description', 'section', 'published')
+    'creatoriD', 'description', 'section', 'published', 'author.author_email', 'author.author_faculty')
     return json.loads(get_doc.to_json())
 
 

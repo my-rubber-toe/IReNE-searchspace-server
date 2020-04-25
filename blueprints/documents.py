@@ -20,6 +20,11 @@ def list_documents():
     """
     if request.method == 'GET':
         docs = get_docs()
+        for doc in docs:
+            doc['authorFullName'] = []
+            for author in doc['author']:
+                doc['authorFullName'].append(
+                        author['author_FN'] + " " + author['author_LN'])
         return ApiResult(
             message=docs
         )
