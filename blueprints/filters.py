@@ -21,9 +21,9 @@ def request_filters():
     filters['damages'].extend(get_damage_list())
     filters['tags'].extend(get_tags_list())
     filters['infrastructures'].extend(get_infrastructure_list())
-    collaborators = get_collaborators()
-    for author in collaborators:
-        filters['authors'].append(author['first_name'] + " " + author['last_name'])
+    authors = get_authors()
+    for author in authors:
+            filters['authors'].append(author['author_FN'] + " " + author['author_LN'])
     return ApiResult(
         message=filters
     )

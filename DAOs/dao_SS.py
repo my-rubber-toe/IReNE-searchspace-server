@@ -52,8 +52,6 @@ def get_doc_tag_type(tag):
     get_docs = DocumentCase.objects.filter(tagsDoc__contains = tag)
     return json.loads(get_docs.to_json()) 
 
-
-#possibly not going to be used
 def get_doc_creator(collabId):
     get_creator = Collaborator.objects().only('first_name', 'last_name', 'email').get(id=collabId)
     return json.loads(get_creator.to_json())
@@ -62,6 +60,11 @@ def get_doc_creator(collabId):
 def get_collaborators():
     collaborators = Collaborator.objects.only('first_name', 'last_name').exclude('id')
     return json.loads(collaborators.to_json())
+
+
+def get_authors():
+    authors = DocumentCase.objects.only('author').distinct('author')
+    return authors
 
 
 def alphabetical_order():
