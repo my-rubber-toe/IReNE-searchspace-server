@@ -1,5 +1,5 @@
 from mongoengine import *
-from schema_DB import *
+from DAOs.schema_DB import *
 
 def Collabs():
     """

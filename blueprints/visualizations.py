@@ -1,64 +1,61 @@
-from flask import Blueprint, request
-
-from utils.exceptions import SearchSpaceApiError
-from utils.responses import ApiException, ApiResult
-from utils.validators import GetDocumentsValidator, GetComparisonValidator, GetDocIdValidator
-
+from flask import Blueprint
+from DAOs.dao_SS import *
+from utils.responses import ApiResult
 
 bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
 
 #TODO verify sessions
-@bp.route('/map', methods=['GET', 'POST'])
+@bp.route('/map', methods=['GET'])
 def visualize_map():
     """
+    GET request to return the metadata of all documents but only the fields fields needed for the map.
 
-    :return:
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the map
+
     """
     #  search in the DB for the document  #
     #  add exceptions for other methods  #
-    if request.method == 'GET':
-        #  getalldocuments
-        #  DAO  #
-        return ApiResult(
-            message='All Docs'
-        )
-    if request.json == {}:
-        raise SearchSpaceApiError(msg='No request body data.', status=400)
-    body = GetDocumentsValidator().load(request.json)
-    #  DAO here  #
+    #  DAO  #
+    map_docs = get_map_docs()
     return ApiResult(
-        message='Valid Data', given_data=body
+        message=map_docs
     )
 
 
-@bp.route('/comparison-graph', methods=['GET', 'POST'])
+@bp.route('/comparison-graph', methods=['GET'])
 def visualize_comparison():
     """
+    GET request to return the metadata of all documents but only the fields fields needed for the xy plot.
 
-    :return:
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the xy plot
+
     """
-    # add exceptions for other methods
-    if request.method == 'POST':
-        if request.json == {}:
-            raise SearchSpaceApiError(msg='No request body data.', status=400)
-        body = GetComparisonValidator().load(request.json)
-        #  DAO here  #
-        return ApiResult(
-            message='id of document', given_data=body
-        )
+    #  DAO here  #
+    comparison = get_comparison_docs()
+    return ApiResult(
+        message=comparison
+    )
 
 
-@bp.route('/timeline', methods=['GET', 'POST'])
+@bp.route('/timeline', methods=['GET'])
 def visualize_timeline():
     """
-    :return:
+    GET request to return the metadata of all documents but only the fields fields needed for the timeline.
+
+    Returns
+    -------
+    Message: json
+       The metadata of all documents with only the required information for the timeline
+
     """
-    # add exceptions for other methods
-    if request.method == 'POST':
-        if request.json == {}:
-            raise SearchSpaceApiError(msg='No request body data.', status=400)
-        body = GetDocIdValidator().load(request.json)
-        #  DAO here  #
-        return ApiResult(
-            message='Data for visualize', given_data=body
-        )
+    # add dao
+    timeline = get_timeline_docs()
+    return ApiResult(
+        message=timeline
+    )

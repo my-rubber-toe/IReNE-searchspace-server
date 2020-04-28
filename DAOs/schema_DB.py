@@ -3,8 +3,10 @@ import datetime
 import regex
 #Connection to the Database
 connect('IReNEdb')
-#connec the db for testing purposes
-#connect('IReNEdb', host='mongomock://localhost:27017')
+
+
+# connect the db for testing purposes
+# connect('IReNEdb', host='mongomock://localhost:27017')
 
 
 class Collaborator(Document):
@@ -27,6 +29,7 @@ class Collaborator(Document):
     banned = BooleanField(default=False,required=True)
     approved = BooleanField(default=False,required=True)
 
+
 class Admin(Document):
     """
         Document Class for Admin. 
@@ -41,6 +44,7 @@ class Admin(Document):
     username = StringField(min_length=8, max_length=20, required=True, unique=True, regex='(^(?=[a-zA-Z0-9])(?=.*[a-z])(?=.*[0-9])(?=.*[\.])(?=.*[A-Z])).*[^.]$' )
     password = StringField(min_length=8,max_length=20, required=True, regex='(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])')
 
+
 class Tag(Document):
     """
         Document Class for Tag. 
@@ -51,6 +55,7 @@ class Tag(Document):
             - tagItem: <String>  Tag that can be used in a DocumentCase.   
     """
     tagItem = StringField(min_length=1, max_length=20, required=True, unique=True)
+
 
 class Infrastructure(Document):
     """
@@ -63,6 +68,7 @@ class Infrastructure(Document):
     """
     infrastructureType = StringField(min_length=1,max_length=30, required=True, unique=True)
     
+
 class Damage(Document):
     """
         Document Class for Damage. 
@@ -73,6 +79,7 @@ class Damage(Document):
             - damageType: <String>  category that can be used in a DocumentCase.   
     """
     damageType = StringField(min_length=1,max_length=30, required=True, unique=True)
+
 
 class Author(EmbeddedDocument):
     """
@@ -92,6 +99,7 @@ class Author(EmbeddedDocument):
     author_email = EmailField(min_length=1,max_length=50, required=False, regex='(.*)\.(.*)@upr\.edu')
     author_faculty = StringField(min_length=1,max_length=30, required=False)
 
+
 class Actor(EmbeddedDocument):
     """
         EmbeddedDocument Class for Actor. 
@@ -107,6 +115,7 @@ class Actor(EmbeddedDocument):
     actor_FN = StringField(min_length=1, max_length=30, required=False)
     actor_LN = StringField(min_length=1,max_length=30, required=False)
     role = StringField(min_length=1,max_length=30, required=False)
+
 
 class Timeline(EmbeddedDocument):
     """
@@ -126,6 +135,7 @@ class Timeline(EmbeddedDocument):
     eventStartDate = StringField(min_length=1, required=False, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
     eventEndDate = StringField(min_length=1, required=False, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
 
+
 class Section(EmbeddedDocument):
     """
         EmbeddedDocument Class for Section. 
@@ -139,6 +149,7 @@ class Section(EmbeddedDocument):
     """
     secTitle = StringField(min_length=1, max_length=250, required=False)
     content = StringField(required=False)
+
 
 class DocumentCase(Document):
     """

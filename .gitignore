@@ -132,4 +132,11 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
+# Documentation
+_build/
+_static/
+_templates/
+conf.py
+index.rst
+make.bat
+Makefile

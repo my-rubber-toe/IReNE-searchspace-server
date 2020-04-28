@@ -1,6 +1,7 @@
-from mongoengine import *
-from schema_DB import *
 import json
+
+from DAOs.schema_DB import *
+
 
 def post_access_request(**ac_req):
     """
@@ -10,12 +11,15 @@ def post_access_request(**ac_req):
     email = ac_req["email"])
     new_collab.save()
 
+
 def get_docs():
     """
         Returns the list of documents
     """
-    get_doc = DocumentCase.objects(published=True)
+    get_doc = DocumentCase.objects(published=True).exclude('timeline', 'actor',
+    'creatoriD', 'description', 'section', 'published', 'author.author_email', 'author.author_faculty')
     return json.loads(get_doc.to_json())
+
 
 def get_doc(docid):
     """
@@ -24,12 +28,14 @@ def get_doc(docid):
     get_doc = DocumentCase.objects.get(id = docid, published = True)
     return json.loads(get_doc.to_json())
 
+
 def get_doc_damage_type(damage):
     """
         Returns the list of documents based on category given
     """
     get_docs = DocumentCase.objects.filter(damageDocList__contains = damage)
     return json.loads(get_docs.to_json())
+
 
 def get_doc_infrastructure_type(infras):
     """
@@ -38,6 +44,7 @@ def get_doc_infrastructure_type(infras):
     get_docs = DocumentCase.objects.filter(infrasDocList__contains = infras)
     return json.loads(get_docs.to_json())
 
+
 def get_doc_tag_type(tag):
     """
         Returns the list of documents based on category given
@@ -45,17 +52,20 @@ def get_doc_tag_type(tag):
     get_docs = DocumentCase.objects.filter(tagsDoc__contains = tag)
     return json.loads(get_docs.to_json()) 
 
-#possibly not going to be used
-def get_doc_creators():
-    get_docs = DocumentCase.objects()
-    get_creators_ids = []
-    for doc in get_docs:
-        get_creators_ids.append(doc.creatoriD)
-    creators_names = []
-    for idCollab in get_creators_ids:
-        get_creator = Collaborator.objects.get(id = idCollab)
-        creators_names.append( get_creator.first_name + " " + get_creator.last_name)
-    return creators_names
+def get_doc_creator(collabId):
+    get_creator = Collaborator.objects().only('first_name', 'last_name', 'email').get(id=collabId)
+    return json.loads(get_creator.to_json())
+
+
+def get_collaborators():
+    collaborators = Collaborator.objects.only('first_name', 'last_name').exclude('id')
+    return json.loads(collaborators.to_json())
+
+
+def get_authors():
+    authors = DocumentCase.objects.only('author').distinct('author')
+    return authors
+
 
 def alphabetical_order():
     """
@@ -69,15 +79,17 @@ def get_infrastructure_list():
     """
         Returns the list of infrastructures
     """
-    infra_objects = Infrastructure.objects()
+    infra_objects = Infrastructure.objects().exclude("id")
     return json.loads(infra_objects.to_json())
-   
+
+
 def get_damage_list():
     """
         Returns the list of damages
     """
-    damage_objects = Damage.objects()
+    damage_objects = Damage.objects().exclude("id")
     return json.loads(damage_objects.to_json())
+
 
 def get_tags_list():
     """
@@ -85,6 +97,7 @@ def get_tags_list():
     """
     tag_objects = Tag.objects()
     return json.loads(tag_objects.to_json())
+
 
 def get_timeline_docs():
     """
@@ -103,8 +116,3 @@ def get_map_docs():
     map_docs = DocumentCase.objects(published=True).exclude('timeline', 'actor',
     'creatoriD', 'description', 'section', 'published')
     return json.loads(map_docs.to_json())
-	
-def get_docs():
-    get_doc = DocumentCase.objects(published=True).exclude('timeline', 'actor',
-    'creatoriD', 'description', 'section', 'published')
-    return json.loads(get_doc.to_json())

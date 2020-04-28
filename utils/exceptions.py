@@ -52,6 +52,11 @@ class SearchSpaceApiError(SearchSpaceError):
     error_type = 'SearchSpaceApiError'
 
 
-class TellSpaceRequestValidationError(SearchSpaceError):
+class SearchSpaceRequestValidationError(SearchSpaceError):
     """Audit Manager API error"""
-    error_type = 'TellSpaceRequestValidationError'
+    error_type = 'SearchSpaceRequestValidationError'
+
+
+class SearchSpaceRequestError(SearchSpaceError):
+    """Audit Manager API error"""
+    error_type = 'SearchSpaceRequestError'
