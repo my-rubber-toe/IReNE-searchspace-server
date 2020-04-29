@@ -4,7 +4,7 @@ from utils.responses import ApiResult
 from mongoengine.errors import DoesNotExist, ValidationError
 from DAOs.dao_SS import *
 
-bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
+bp = Blueprint('documents', __name__, url_prefix='/documents')
 
 #TODO verify sessions
 @bp.route('/', methods=['GET'])

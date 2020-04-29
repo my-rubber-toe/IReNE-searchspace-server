@@ -1,8 +1,8 @@
 from mongoengine import *
 import datetime
-import regex
 #Connection to the Database
-connect('IReNEdb')
+# connect('IReNEdb')
+connect('IReNEdb', host="mongodb://testuser:testpassword@irene-db:27017/?authSource=admin")
 
 
 # connect the db for testing purposes

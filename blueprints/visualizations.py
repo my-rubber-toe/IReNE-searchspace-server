@@ -2,7 +2,7 @@ from flask import Blueprint
 from DAOs.dao_SS import *
 from utils.responses import ApiResult
 
-bp = Blueprint('visualizations', __name__, url_prefix='/api/visualize/')
+bp = Blueprint('visualizations', __name__, url_prefix='/visualize')
 
 #TODO verify sessions
 @bp.route('/map', methods=['GET'])

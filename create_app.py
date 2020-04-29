@@ -177,7 +177,7 @@ def register_cors(app: Flask):
 
     CORS(
         app=app,
-        resources={r"/api/*": {"origins": origins_list}},
+        resources={r"/*": {"origins": origins_list}},
         methods=methods_list,
         allowed_headers=allowed_headers_list,
         supports_credentials=True,
