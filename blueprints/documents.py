@@ -4,7 +4,7 @@ from utils.responses import ApiResult
 from mongoengine.errors import DoesNotExist, ValidationError
 from DAOs.dao_SS import *
 
-bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
+bp = Blueprint('documents', __name__, url_prefix='/documents/')
 
 #TODO verify sessions
 @bp.route('/', methods=['GET'])
@@ -25,6 +25,8 @@ def list_documents():
             for author in doc['author']:
                 doc['authorFullName'].append(
                         author['author_FN'] + " " + author['author_LN'])
+            creatorInfo = get_doc_creator(doc['creatoriD'])
+            doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
         return ApiResult(
             message=docs
         )
