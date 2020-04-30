@@ -140,6 +140,7 @@ def register_base_url(app):
         return ApiResult(message='You have reached the SearchSpace API. To make other requests please use all routes under /searchSpace/api')
 
 
+
 def register_request_teardown(app):
     @app.teardown_request
     def do_the_thing(exeption):
@@ -165,8 +166,6 @@ def register_cors(app: Flask):
         'Content-Type',
         'Authorization',
         'Content-Disposition',
-        'Origin',
-        
         'Referrer-Policy',
         'Strict-Transport-Security',
         'X-Frame-Options',
