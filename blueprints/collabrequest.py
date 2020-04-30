@@ -7,7 +7,7 @@ from utils.responses import ApiResult
 from utils.validators import GetCollaboratorRequestValidator
 from DAOs.dao_SS import *
 
-bp = Blueprint('collab_request', __name__, url_prefix='/api/collab-request/')
+bp = Blueprint('collab_request', __name__, url_prefix='/collab-request/')
 
 #  TODO verify sessions  #
 @bp.route('/', methods=['POST'])
