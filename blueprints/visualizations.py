@@ -5,7 +5,7 @@ from utils.responses import ApiResult
 bp = Blueprint('visualizations', __name__, url_prefix='/visualize/')
 
 #TODO verify sessions
-@bp.route('/map', methods=['GET'])
+@bp.route('/map/', methods=['GET'])
 def visualize_map():
     """
     GET request to return the metadata of all documents but only the fields fields needed for the map.
@@ -25,7 +25,7 @@ def visualize_map():
     )
 
 
-@bp.route('/comparison-graph', methods=['GET'])
+@bp.route('/comparison-graph/', methods=['GET'])
 def visualize_comparison():
     """
     GET request to return the metadata of all documents but only the fields fields needed for the xy plot.
@@ -43,7 +43,7 @@ def visualize_comparison():
     )
 
 
-@bp.route('/timeline', methods=['GET'])
+@bp.route('/timeline/', methods=['GET'])
 def visualize_timeline():
     """
     GET request to return the metadata of all documents but only the fields fields needed for the timeline.
