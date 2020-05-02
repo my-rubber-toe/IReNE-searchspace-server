@@ -64,7 +64,7 @@ def get_collaborators():
 
 
 def get_authors():
-    authors = DocumentCase.objects.only('author').distinct('author')
+    authors = DocumentCase.objects(published=True).only('author').distinct('author')
     return authors
 
 
