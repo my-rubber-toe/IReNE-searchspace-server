@@ -18,7 +18,8 @@ def get_docs():
     """
     get_doc = DocumentCase.objects(published=True).exclude('timeline', 'actor',
                                                            'description', 'section', 'published', 'author.author_email',
-                                                           'author.author_faculty')
+                                                           'author.author_faculty', 'location.latitude',
+                                                           'location.longitude')
     return json.loads(get_doc.to_json())
 
 
@@ -115,5 +116,5 @@ def get_comparison_docs():
 
 def get_map_docs():
     map_docs = DocumentCase.objects(published=True).exclude('timeline', 'actor',
-    'creatoriD', 'description', 'section', 'published')
+    'creatoriD', 'description', 'section', 'published', 'author')
     return json.loads(map_docs.to_json())
