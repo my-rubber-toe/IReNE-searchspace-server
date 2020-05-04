@@ -104,7 +104,9 @@ def get_timeline_docs():
     """
         Returns the list documents with the metadata necessary for 
     """
-    timeline_docs = DocumentCase.objects(published=True).only('id', 'title', 'timeline')
+    timeline_docs = DocumentCase.objects(published=True).only('id', 'title', 'timeline', 'tagsDoc',
+    'infrasDocList', 'damageDocList')
+    
     return json.loads(timeline_docs.to_json())
 
 def get_comparison_docs():

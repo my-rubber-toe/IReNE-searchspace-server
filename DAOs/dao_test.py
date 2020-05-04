@@ -1,5 +1,5 @@
 from mongoengine import *
-from schema_DB import *
+from DAOs.schema_DB import *
 from dao_SS import *
 import json
 import init_db_test
