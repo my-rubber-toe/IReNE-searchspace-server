@@ -18,8 +18,7 @@ def get_docs():
     """
     get_doc = DocumentCase.objects(published=True).exclude('timeline', 'actor',
                                                            'description', 'section', 'published', 'author.author_email',
-                                                           'author.author_faculty', 'location.latitude',
-                                                           'location.longitude')
+                                                           'author.author_faculty')
     return json.loads(get_doc.to_json())
 
 

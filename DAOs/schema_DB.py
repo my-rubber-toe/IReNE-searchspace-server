@@ -206,7 +206,7 @@ class DocumentCase(Document):
     tagsDoc = ListField(StringField(min_length=0,max_length=50, unique=True), required=False, max_length=10)
     infrasDocList =  ListField(StringField(min_length=1,max_length=50,required=True, unique=True))
     damageDocList =  ListField(StringField(min_length=1,max_length=50,required=True, unique=True))
-    location = ListField(EmbeddedDocumentField(Location), max_length=5, unique=True, required=False)
+    location = ListField(EmbeddedDocumentField(Location), max_length=5, required=False)
     author = ListField(EmbeddedDocumentField(Author), min_length=1, max_length=10, required=True)
     actor = ListField(EmbeddedDocumentField(Actor),min_length=1, max_length=5, required=True)
     section = ListField(EmbeddedDocumentField(Section), max_length=10, required=False)
