@@ -8,6 +8,7 @@ from werkzeug.utils import find_modules, import_string
 from DAOs.init_db import register_database
 from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
 from utils.responses import ApiException, ApiResult
+from utils.scheduled_jobs import ScheduledJobs
 
 """
 create_app.py
@@ -72,6 +73,9 @@ class ApiFlask(Flask):
 
             # register '/ endpoint'
             self.register_base_url()
+
+            # Register ScheduledJobs
+            ScheduledJobs.job_ping_db()
 
             return self
 
