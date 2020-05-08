@@ -12,6 +12,7 @@ from DAOs.dao_SS import *
 
 bp = Blueprint('collab_request', __name__, url_prefix='/collab-request/')
 
+
 #  TODO verify sessions  #
 @bp.route('/', methods=['POST'])
 def request_access():
@@ -44,8 +45,9 @@ def request_access():
         requests.Request(),
         current_app.config['GOOGLE_OAUTH_CLIENT_ID'])
 
-    # Verify that the token was indeed issued by google accounts.
-    if id_info['iss'] != 'accounts.google.com':
+    # Verify that the token was indeed issued by google accounts and that the token was issued for the collaborator
+    # email.
+    if id_info['iss'] != 'accounts.google.com' or id_info['email'] != email:
         raise SearchSpaceRequestValidationError(msg="Wrong issuer. Token issuer is not Google.")
     try:
         post_access_request(first_name=first_name, last_name=last_name, email=email)
@@ -54,5 +56,3 @@ def request_access():
             message='Valid Data')
     except ():
         raise SearchSpaceRequestError(msg='Request already created', status=409)
-
-
