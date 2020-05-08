@@ -1,5 +1,6 @@
 from marshmallow import validate, Schema, fields
 
+
 class GetCollaboratorRequestValidator(Schema):
     """
 
@@ -25,3 +26,4 @@ class GetCollaboratorRequestValidator(Schema):
             validate.Length(max=70)
         ]
     )
+    idToken = fields.String(required=True)

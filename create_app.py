@@ -52,6 +52,7 @@ class ApiFlask(Flask):
             -------
                 self
                     Instance of the ApiFlask class.
+                    :param config: configuration of the app
                     :param self:
         """
 

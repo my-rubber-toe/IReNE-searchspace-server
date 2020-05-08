@@ -1,6 +1,9 @@
 import marshmallow
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from json import load
+
+from google.auth.transport import requests
+from google.oauth2 import id_token
 from mongoengine.errors import ValidationError, DoesNotExist
 from utils.exceptions import SearchSpaceRequestError, SearchSpaceRequestValidationError
 from utils.responses import ApiResult
@@ -35,6 +38,15 @@ def request_access():
     first_name = body.get('firstName')
     last_name = body.get('lastName')
     email = body.get('email')
+    token = body.get('idToken')
+    id_info = id_token.verify_oauth2_token(
+        token,
+        requests.Request(),
+        current_app.config['GOOGLE_OAUTH_CLIENT_ID'])
+
+    # Verify that the token was indeed issued by google accounts.
+    if id_info['iss'] != 'accounts.google.com':
+        raise SearchSpaceRequestValidationError(msg="Wrong issuer. Token issuer is not Google.")
     try:
         post_access_request(first_name=first_name, last_name=last_name, email=email)
         return ApiResult(

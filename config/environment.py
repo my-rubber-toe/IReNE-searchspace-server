@@ -13,3 +13,6 @@ SERVER_NAME = os.getenv("SERVER_NAME")
 # Database
 DB_NAME = os.getenv('DB_NAME')
 DB_HOST = os.getenv("DB_HOST")
+
+# Google
+GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
