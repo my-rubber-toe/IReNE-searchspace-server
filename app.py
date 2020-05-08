@@ -1,4 +1,5 @@
-from create_app import create_app
+from create_app import ApiFlask
+
 '''
 To run this server in development
     $ export FLASK_APP=`pwd`/app.py
@@ -11,6 +12,6 @@ parameters could be
     config.production
 '''
 # Search for the config file and add it to the
-app = create_app('config.development')
 if __name__ == '__main__':
-    app.run(host='localhost', port=80, debug=True)
+    app = ApiFlask(__name__).create_app('config.environment')
+    app.run()

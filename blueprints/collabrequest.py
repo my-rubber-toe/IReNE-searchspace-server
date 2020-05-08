@@ -29,10 +29,9 @@ def request_access():
         If the request already is created in the database
     """
     try:
-        print(request.json)
         body = GetCollaboratorRequestValidator().load(request.json)
-    except (marshmallow.ValidationError, ValidationError) as e:
-        raise SearchSpaceRequestValidationError(e, msg='Invalid Data')
+    except ():
+        raise SearchSpaceRequestValidationError(msg='Invalid Data', status=400)
     first_name = body.get('firstName')
     last_name = body.get('lastName')
     email = body.get('email')
@@ -41,7 +40,7 @@ def request_access():
         return ApiResult(
             status=201,
             message='Valid Data')
-    except NotUniqueError as e:
-        raise SearchSpaceRequestError(e, msg='Request already created')
+    except ():
+        raise SearchSpaceRequestError(msg='Request already created', status=409)
 
 

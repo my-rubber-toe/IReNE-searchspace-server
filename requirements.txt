@@ -1,3 +1,6 @@
+bson
+namegenerator
+names
 mongomock
 mongoengine
 flask

@@ -1,15 +1,13 @@
 import datetime
-import logging
-
-logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger('SearchSpaceLogger')
+from utils.logger import AppLogger
 
 
 class SearchSpaceError(Exception):
     """Base Audit Manager Error Class"""
-    error_type = 'SearchSpaceError'
+    error_type = 'SearchSpace Error'
 
     def __init__(self, err=None, msg='Error', status=500, user='', action=None):
+        self.logger = AppLogger()
         self.msg = msg
         self.status = status
         if err:
@@ -25,7 +23,7 @@ class SearchSpaceError(Exception):
         self.log()
 
     def log(self):
-        log_string = '"error":"{}","error_type":"{}","user":"{}","log_action":"{}",'\
+        log_string = '"error":"{}","error_type":"{}","user":"{}","log_action":"{}",' \
                      '"error_description":"{}","status":"{}", "time_stamp": "{}"'.format(
             str(self.err).replace('"', "'"),
             str(self.error_type).replace('"', "'"),
@@ -37,10 +35,7 @@ class SearchSpaceError(Exception):
         )
 
         log_string = '{' + log_string + '},\n'
-
-        # TODO: implement buffer
-        with open('error_logs.log', 'a+') as f:
-            f.write(log_string)
+        self.logger.log_error(log_string)
 
     def __str__(self):
         return f'\nApplication is in DEBUG MODE:\nError Pretty Print:\n\tType:{self.error_type}; Msg:{self.msg}; Status:{self.status}; ' \
@@ -49,14 +44,14 @@ class SearchSpaceError(Exception):
 
 class SearchSpaceApiError(SearchSpaceError):
     """Audit Manager API error"""
-    error_type = 'SearchSpaceApiError'
+    error_type = 'SearchSpace Api Error'
 
 
 class SearchSpaceRequestValidationError(SearchSpaceError):
     """Audit Manager API error"""
-    error_type = 'SearchSpaceRequestValidationError'
+    error_type = 'SearchSpace Request Validation Error'
 
 
 class SearchSpaceRequestError(SearchSpaceError):
     """Audit Manager API error"""
-    error_type = 'SearchSpaceRequestError'
+    error_type = 'SearchSpace Request Error'

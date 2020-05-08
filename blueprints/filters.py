@@ -4,7 +4,7 @@ from DAOs.dao_SS import *
 
 bp = Blueprint('filters', __name__, url_prefix='/filters/')
 
-#  TODO verify sessions  #
+
 @bp.route('/', methods=['GET'])
 def request_filters():
     """
@@ -23,10 +23,11 @@ def request_filters():
     filters['infrastructures'].extend(get_infrastructure_list())
     authors = get_authors()
     for author in authors:
-            filters['authors'].append(author['author_FN'] + " " + author['author_LN'])
+        filters['authors'].append(author['author_FN'] + " " + author['author_LN'])
     return ApiResult(
         message=filters
     )
+
 
 @bp.route('/tags')
 def get_tags():

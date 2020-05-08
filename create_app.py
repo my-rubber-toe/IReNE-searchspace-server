@@ -1,8 +1,20 @@
+import inspect
+import sys
+
 from flask import Flask
 from flask_cors import CORS
 from werkzeug.utils import find_modules, import_string
+
+from DAOs.init_db import register_database
+from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
 from utils.responses import ApiException, ApiResult
-# from DAOs import init_db_test
+
+"""
+create_app.py
+====================================
+Holds the configuration functions for blueprints, routes, cors, error catching and much more.
+"""
+
 
 class ApiFlask(Flask):
     """
@@ -10,175 +22,181 @@ class ApiFlask(Flask):
         Overrides the make response method to add custom error classes ApiResult and ApiException support
     """
 
+    def __init__(self, import_name):
+        super().__init__(import_name)
+
     def make_response(self, rv):
+        """
+            Return a response object which you can use to attach headers and registers the ApiResult and ApiException
+            classes as response objects.
+            Returns
+            -------
+                    Instance of a Flask Response class.
+        """
         if isinstance(rv, ApiResult):
             return rv.to_response()
         if isinstance(rv, ApiException):
-            return rv.to_result()
+            return rv.to_response()
         return Flask.make_response(self, rv)
 
+    def create_app(self, config=None):
+        """
+            Sets up this class instance by configuring database connections, endpoints, cors, secrets, origins, error
+            handlers and JWT manager.
+            Parameters
+            ----------
+                config
+                    the file to be used as the configuration file
+            Returns
+            -------
+                self
+                    Instance of the ApiFlask class.
+                    :param self:
+        """
 
-# Setup Methods
+        with self.app_context():
+            # Set all variables from the config file passed as a parameter
+            self.config.from_object(config or {})
 
-def create_app(config=None):
-    """Creates and returns a Flask app instance.
-    Keyword Arguments:
-        config {string} --  (default: {None})
-    Returns:
-        [flask_application] -- instance of a flask app
-    """
-    app = ApiFlask(__name__)
+            # TODO: Setup CORS for all endpoints
+            self.register_cors()
 
-    with app.app_context():
-        # Set all variables from the config file passed as a parameter
-        app.config.from_object(config or {})
+            # Setup blueprints to establish all endpoint routes
+            self.register_blueprints()
 
-        # Setup Flask session Secret
-        # app.secret_key = app.config['SECRET_KEY']
+            # Register the error handlers
+            self.register_error_handlers()
 
-        # TODO: Setup CORS for all endpoints
-        register_cors(app)
+            # Register database
+            register_database(self)
 
-        # Testing with mock DB
-        # Setup validator plugins
-        # validator.init_app(app)
+            # register '/ endpoint'
+            self.register_base_url()
 
-        # Setup blueprints to establish all endpoint routes
-        register_blueprints(app)
+            return self
 
-        # Register the error handlers
-        register_error_handlers(app)
+    def register_blueprints(self):
+        """Register all blueprints under the {.blueprint} module
+        in the passed application instance.
+        Arguments:
+            app {flask application} -- application instance
+        """
+        for name in find_modules('blueprints'):
+            mod = import_string(name)
+            if hasattr(mod, 'bp'):
+                self.register_blueprint(mod.bp)
 
-        # register '/SearchSpace/api endpoint'
-        register_base_url(app)
+    def register_error_handlers(self):
+        """Register error daos to flask application instance.
+        Arguments:
+            app {flask application} -- application instance
+        """
+        if self.config['DEBUG'] == 0:
 
-        # Setup app request teardown process
-        register_request_teardown(app)
+            # Register marshmallow validator  exceptions
+            for name, obj in inspect.getmembers(sys.modules['marshmallow.exceptions']):
+                if inspect.isclass(obj):
+                    @self.errorhandler(obj)
+                    def handle_marshmallow_errors(error):
+                        return ApiException(
+                            error_type='Validation Error',
+                            message='Please verify you request body and parameters.',
+                            status=400
+                        )
+            # Register mongoengine  exceptions
+            for name, obj in inspect.getmembers(sys.modules['mongoengine.errors']):
+                if inspect.isclass(obj) and not name == 'defaultdict':
+                    @self.errorhandler(obj)
+                    def handle_database_errors(error):
+                        return ApiException(
+                            error_type='Database Connection Error',
+                            message='Internal Server Error',
+                            status=500
+                        )
 
-        return app
+            @self.errorhandler(SearchSpaceApiError)
+            def handle_api_error(error):
+                return ApiException(
+                    error_type=error.error_type,
+                    message=error.msg,
+                    status=error.status
+                )
 
+            @self.errorhandler(SearchSpaceRequestError)
+            def handle_request_error(error):
+                return ApiException(
+                    error_type=error.error_type,
+                    message=error.msg,
+                    status=error.status
+                )
 
-def register_blueprints(app):
-    """Register all blueprints under the {.blueprint} module
-    in the passed application instance.
-    Arguments:
-        app {flask application} -- application instance
-    """
-    for name in find_modules('blueprints'):
-        mod = import_string(name)
-        if hasattr(mod, 'bp'):
-            app.register_blueprint(mod.bp)
+            @self.errorhandler(Exception)
+            def handle_unexpected_error():
+                return ApiException(
+                    error_type='Unexpected Error',
+                    message='An unexpected error has occurred.',
+                    status=500
+                )
 
+        self.register_error_handler(
+            400,
+            lambda err: ApiException(message=str(
+                err), status=400, error_type='Bad request')
+        )
 
-def register_error_handlers(app):
-    """Register error daos to flask application instance.
-    Arguments:
-        app {flask application} -- application instance
-    """
-    # if app.config['DEBUG']:
-    #     # If debug true, then return the whole error stack
-    #     @app.errorhandler(SearchSpaceError)
-    #     def handle_error(error):
-    #         return ApiException(
-    #             _type=error.__class__.__name__,
-    #             message=error.error_stack,
-    #             status=error.status
-    #         )
-    # else:
-    #     @app.errorhandler(SearchSpaceError)
-    #     def handle_general_error(error):
-    #         return ApiException(
-    #             _type=error.__class__.__name__,
-    #             message=error.msg,
-    #             status=error.status
-    #         )
-    #
-    #     @app.errorhandler(SearchSpaceApiError)
-    #     def handle_api_error(error):
-    #         # send email to service desk
-    #         return ApiException(
-    #             _type=error.__class__.__name__,
-    #             message=error.msg,
-    #             status=error.status
-    #         )
-    #
-    #     @app.errorhandler(Exception)
-    #     def handle_unexpected_error(error):
-    #         SearchSpaceError(
-    #             err=error,
-    #             msg='An unexpected error has occurred.',
-    #             status=500
-    #         ).log()
-    #         return ApiException(
-    #             _type='UnexpectedException',
-    #             message='An unexpected error has occurred. Please verify error logs',
-    #             status=500
-    #         )
-    #
-    # app.register_error_handler(
-    #     400,
-    #     lambda err: ApiException(message=str(
-    #         err), status=400, _type='Bad request')
-    # )
-    #
-    # app.register_error_handler(
-    #     404,
-    #     lambda err: ApiException(message=str(
-    #         err), status=404, _type='Not found')
-    # )
-    #
-    # app.register_error_handler(
-    #     405,
-    #     lambda err: ApiException(message=str(
-    #         err), status=405, _type='Request method')
-    # )
+        self.register_error_handler(
+            404,
+            lambda err: ApiException(message=str(
+                err), status=404, error_type='Not found')
+        )
 
+        self.register_error_handler(
+            405,
+            lambda err: ApiException(message=str(
+                err), status=405, error_type='Request method')
+        )
 
-def register_base_url(app):
-    @app.route('/')
-    def api():
-        return ApiResult(message='You have reached the SearchSpace API. To make other requests please use all routes under /searchSpace/api')
+    def register_base_url(self):
+        @self.route('/')
+        def api():
+            return ApiResult(
+                message='You have reached the SearchSpace API. To make other requests please use all routes '
+                        'under /searchSpace/api')
 
+    def register_cors(self):
+        """
+            Setup CORS, cross-origin-resource-sharing settings
+            Parameters
+            ----------
+                app
+                    the ApiFlask application instance.
+        """
 
+        origins_list = '*'
 
-def register_request_teardown(app):
-    @app.teardown_request
-    def do_the_thing(exeption):
-        pass
+        methods_list = ['GET', 'POST', 'OPTIONS']
 
-    pass
+        allowed_headers_list = [
+            'Access-Control-Allow-Credentials',
+            'Access-Control-Allow-Headers',
+            'Access-Control-Allow-Methods',
+            'Access-Control-Allow-Origin',
+            'Content-Type',
+            'Authorization',
+            'Content-Disposition',
+            'Referrer-Policy',
+            'Strict-Transport-Security',
+            'X-Frame-Options',
+            'X-Xss-Protection',
+            'X-Content-Type-Options',
+            'X-Permitted-Cross-Domain-Policies'
+        ]
 
+        CORS(
+            app=self,
+            resources={r"/*": {"origins": origins_list}},
+            methods=methods_list,
+            allowed_headers=allowed_headers_list,
+            supports_credentials=True,
 
-def register_cors(app: Flask):
-    """
-        Setup CORS , cross-origin-resource-sharing settings
-    """
-
-    origins_list = '*'
-
-    methods_list = ['GET', 'POST', 'OPTIONS']
-
-    allowed_headers_list = [
-        'Access-Control-Allow-Credentials',
-        'Access-Control-Allow-Headers',
-        'Access-Control-Allow-Methods',
-        'Access-Control-Allow-Origin',
-        'Content-Type',
-        'Authorization',
-        'Content-Disposition',
-        'Referrer-Policy',
-        'Strict-Transport-Security',
-        'X-Frame-Options',
-        'X-Xss-Protection',
-        'X-Content-Type-Options',
-        'X-Permitted-Cross-Domain-Policies'
-    ]
-
-    CORS(
-        app=app,
-        resources={r"/*": {"origins": origins_list}},
-        methods=methods_list,
-        allowed_headers=allowed_headers_list,
-        supports_credentials=True,
-
-    )
+        )

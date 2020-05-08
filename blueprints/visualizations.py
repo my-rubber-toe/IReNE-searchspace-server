@@ -4,7 +4,7 @@ from utils.responses import ApiResult
 
 bp = Blueprint('visualizations', __name__, url_prefix='/visualize/')
 
-#TODO verify sessions
+
 @bp.route('/map/', methods=['GET'])
 def visualize_map():
     """
