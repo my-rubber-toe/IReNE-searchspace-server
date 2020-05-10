@@ -10,7 +10,7 @@ import init_db_test
 # new_ln = 'Black'
 # new_email= 'aurora.black@upr.edu'
 # post_access_request(first_name=new_fn,last_name=new_ln,email=new_email)
-# new_collab = Collaborator.objects.get(email=new_email)
+# new_collab = collaborator.objects.get(email=new_email)
 # print("name: ", new_collab.first_name,new_collab.last_name, "email: ",new_collab.email)
 
 """

@@ -5,7 +5,7 @@ from flask import Flask
 from flask_cors import CORS
 from werkzeug.utils import find_modules, import_string
 
-from DAOs.init_db import register_database
+# from DAOs.init_db import register_database
 from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
 from utils.responses import ApiException, ApiResult
 from utils.scheduled_jobs import ScheduledJobs

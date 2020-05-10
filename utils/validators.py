@@ -16,13 +16,17 @@ class GetCollaboratorRequestValidator(Schema):
     Validation Error
         If one of the fields is not valid
     """
-    firstName = fields.String(required=True, validate=validate.Length(min=1, max=30))
+    firstName = fields.String(required=True, validate=[
+        validate.Length(min=1, max=30),
+        validate.Regexp('^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)')
+        ])
     lastName = fields.String(required=True, validate=[
-        validate.Length(min=1, max=30)])
+        validate.Length(min=1, max=30),
+        validate.Regexp('^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)')])
     email = fields.Email(
         required=True,
         validate=[
-            validate.Regexp('.*(@upr\.edu)$'),
+            validate.Regexp('^[\.a-z0-9]*(@upr\.edu)$'),
             validate.Length(max=70)
         ]
     )

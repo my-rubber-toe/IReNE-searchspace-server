@@ -10,3 +10,6 @@ commitizen
 marshmallow
 python-dotenv
 gunicorn
+google
+google-auth
+requests
