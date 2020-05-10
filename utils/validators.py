@@ -18,11 +18,11 @@ class GetCollaboratorRequestValidator(Schema):
     """
     firstName = fields.String(required=True, validate=[
         validate.Length(min=1, max=30),
-        validate.Regexp('^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)')
+        validate.Regexp('^[A-ZÁÉÍÓÚ][a-z A-Z \- À-ÿ]*[a-záéíóú]$')
         ])
     lastName = fields.String(required=True, validate=[
         validate.Length(min=1, max=30),
-        validate.Regexp('^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)')])
+        validate.Regexp('^[A-ZÁÉÍÓÚ][a-z A-Z \- À-ÿ]*[a-záéíóú]$')])
     email = fields.Email(
         required=True,
         validate=[
