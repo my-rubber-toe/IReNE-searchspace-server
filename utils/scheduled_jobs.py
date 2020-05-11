@@ -15,6 +15,7 @@ import threading
 def ping_db():
     """
         Send ping command to the system database to check health.
+        If the ping fails , register the error in app.log
     """
     while True:
         if not connection.get_db().command('ping'):

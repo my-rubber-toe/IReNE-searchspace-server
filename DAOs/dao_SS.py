@@ -96,7 +96,7 @@ def get_tags_list():
     """
         Returns the list of tags
     """
-    tag_objects = Tag.objects()
+    tag_objects = tag.objects()
     return json.loads(tag_objects.to_json())
 
 

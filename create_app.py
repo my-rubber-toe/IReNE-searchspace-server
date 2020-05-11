@@ -1,3 +1,8 @@
+"""
+create_app.py
+====================================
+Holds the configuration functions for blueprints, routes, cors, error catching and much more.
+"""
 import inspect
 import sys
 
@@ -5,16 +10,11 @@ from flask import Flask
 from flask_cors import CORS
 from werkzeug.utils import find_modules, import_string
 
-# from DAOs.init_db import register_database
-from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
-from utils.responses import ApiException, ApiResult
-from utils.scheduled_jobs import ScheduledJobs
-
-"""
-create_app.py
-====================================
-Holds the configuration functions for blueprints, routes, cors, error catching and much more.
-"""
+from DAOs.init_db import register_database
+#from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
+#from utils.responses import ApiException, ApiResult
+#from utils.scheduled_jobs import ScheduledJobs
+#
 
 
 class ApiFlask(Flask):

@@ -1,3 +1,8 @@
+"""
+validators.py
+=============
+Handles the validations for the request using marshmallow.
+"""
 from marshmallow import validate, Schema, fields
 
 
@@ -9,7 +14,7 @@ class GetCollaboratorRequestValidator(Schema):
     Parameters
     ----------
     Schema
-        A JSON with the fields first_name, last_name and email
+        A JSON with the fields first_name, last_name and email and google token for validate the ISS
 
     Raises
     ------

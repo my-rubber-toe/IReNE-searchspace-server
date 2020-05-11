@@ -134,9 +134,9 @@ dmypy.json
 
 # Documentation
 _build/
-_static/
-_templates/
-conf.py
-index.rst
+Documentation/_static/
+Documentation/_templates/
+Documentation/conf.py
+Documentation/index.rst
 make.bat
 Makefile

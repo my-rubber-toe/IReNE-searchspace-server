@@ -1,6 +1,12 @@
+"""
+filters.py
+====================================
+Routes that manage retrieval of filters options to use on Front End
+"""
 from flask import Blueprint
-from utils.responses import ApiResult
+
 from DAOs.dao_SS import *
+#from utils.responses import ApiResult
 
 bp = Blueprint('filters', __name__, url_prefix='/filters/')
 
@@ -16,7 +22,6 @@ def request_filters():
        All the options of every category of the SearchSpace filters
 
     """
-    #  DAOs to get the info  #
     filters = {'damages': [], 'tags': [], 'infrastructures': [], 'authors': []}
     filters['damages'].extend(get_damage_list())
     filters['tags'].extend(get_tags_list())
@@ -40,7 +45,6 @@ def get_tags():
        All the options to filter of the tags category
 
     """
-    #  DAOs to get the info  #
     return ApiResult(
         message=get_tags_list()
     )
@@ -57,7 +61,6 @@ def get_infrastructures():
        All the options to filter of the infrastructure category
 
     """
-    #  DAOs to get the info  #
     return ApiResult(
         message=get_infrastructure_list()
     )
@@ -74,7 +77,6 @@ def get_damages():
        All the options to filter of the damages category
 
     """
-    #  DAOs to get the info  #
     return ApiResult(
         message=get_damage_list()
     )
@@ -91,7 +93,6 @@ def get_creators():
        All the options to filter of the damage category
 
     """
-    #  DAOs to get the info  #
     authors = get_collaborators()
     for author in authors:
         author['fullName'] = author['first_name'] + " " + author['last_name']

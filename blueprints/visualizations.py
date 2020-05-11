@@ -1,6 +1,11 @@
+"""
+visualizations.py
+====================================
+Routes that manage retrieval of documents metadata for this features on Front End
+"""
 from flask import Blueprint
 from DAOs.dao_SS import *
-from utils.responses import ApiResult
+#from utils.responses import ApiResult
 
 bp = Blueprint('visualizations', __name__, url_prefix='/visualize/')
 
@@ -16,9 +21,6 @@ def visualize_map():
        The metadata of all documents with only the required information for the map
 
     """
-    #  search in the DB for the document  #
-    #  add exceptions for other methods  #
-    #  DAO  #
     map_docs = get_map_docs()
     return ApiResult(
         message=map_docs
@@ -36,7 +38,6 @@ def visualize_comparison():
        The metadata of all documents with only the required information for the xy plot
 
     """
-    #  DAO here  #
     comparison = get_comparison_docs()
     return ApiResult(
         message=comparison
@@ -54,7 +55,6 @@ def visualize_timeline():
        The metadata of all documents with only the required information for the timeline
 
     """
-    # add dao
     timeline = get_timeline_docs()
     return ApiResult(
         message=timeline

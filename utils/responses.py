@@ -1,4 +1,6 @@
 """
+responses.py
+=============
     Classes to standardize the response methods. Improves the ease of debugging.
 """
 
@@ -6,7 +8,9 @@ from flask import make_response, jsonify
 
 
 class ApiResult(object):
-    """API response wrapper class used for successful request responses."""
+    """
+    API results response wrapper class
+    """
 
     def __init__(self, status=200, **kwargs):
         self.res = jsonify(**kwargs)

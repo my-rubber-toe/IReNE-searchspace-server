@@ -1,17 +1,22 @@
+"""
+documents.py
+====================================
+Routes that manage retrieval of documents for /documents route on Front End
+"""
 from flask import Blueprint, request
-from utils.exceptions import SearchSpaceRequestError, SearchSpaceApiError
-from utils.responses import ApiResult
-from mongoengine.errors import DoesNotExist, ValidationError
+
 from DAOs.dao_SS import *
+#from utils.exceptions import SearchSpaceRequestError, SearchSpaceApiError
+#from utils.responses import ApiResult
 
 bp = Blueprint('documents', __name__, url_prefix='/documents/')
 
 
-# TODO verify sessions
 @bp.route('/', methods=['GET'])
 def list_documents():
     """
-    GET request to return the metadata of all documents.
+    GET request to return the metadata of all documents for /documents route on FE sending only the parts of the
+    documents that are needed. This reduced the size to transfer.
 
     Returns
     -------
@@ -26,7 +31,7 @@ def list_documents():
             for author in doc['author']:
                 doc['authorFullName'].append(
                     author['author_FN'] + " " + author['author_LN'])
-            creatorInfo = get_doc_creator(doc['creatoriD'])
+            creatorInfo = get_doc_creator(doc['creatoriD']['$oid'])
             doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
         return ApiResult(
             message=docs
@@ -38,7 +43,7 @@ def list_documents():
 def get_document(doc_id):
     """
 
-    GET request to return all the information about a specific document.
+    GET request to return all the information about a specific document. This route is to retrieve the entire document.
 
     Parameters
     ----------
@@ -48,7 +53,7 @@ def get_document(doc_id):
     Returns
     -------
     Message: json
-        Information of the requested document and status code 200.
+        All Information of the requested document and status code 200.
 
     Raises
     ------
@@ -61,7 +66,8 @@ def get_document(doc_id):
     #  search in the DB for the document  #
     try:
         doc = get_doc(doc_id)
-        creatorInfo = get_doc_creator(doc['creatoriD'])
+        print(doc)
+        creatorInfo = get_doc_creator(doc['creatoriD']['$oid'])
         doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
         doc['creatorEmail'] = (creatorInfo['email'])
         return ApiResult(
