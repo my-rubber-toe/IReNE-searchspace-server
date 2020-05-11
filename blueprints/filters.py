@@ -6,7 +6,7 @@ Routes that manage retrieval of filters options to use on Front End
 from flask import Blueprint
 
 from DAOs.dao_SS import *
-#from utils.responses import ApiResult
+from utils.responses import ApiResult
 
 bp = Blueprint('filters', __name__, url_prefix='/filters/')
 

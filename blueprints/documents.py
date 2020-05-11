@@ -6,8 +6,8 @@ Routes that manage retrieval of documents for /documents route on Front End
 from flask import Blueprint, request
 
 from DAOs.dao_SS import *
-#from utils.exceptions import SearchSpaceRequestError, SearchSpaceApiError
-#from utils.responses import ApiResult
+from utils.exceptions import SearchSpaceRequestError, SearchSpaceApiError
+from utils.responses import ApiResult
 
 bp = Blueprint('documents', __name__, url_prefix='/documents/')
 

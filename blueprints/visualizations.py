@@ -5,7 +5,7 @@ Routes that manage retrieval of documents metadata for this features on Front En
 """
 from flask import Blueprint
 from DAOs.dao_SS import *
-#from utils.responses import ApiResult
+from utils.responses import ApiResult
 
 bp = Blueprint('visualizations', __name__, url_prefix='/visualize/')
 
