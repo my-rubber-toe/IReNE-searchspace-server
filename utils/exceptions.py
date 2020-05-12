@@ -8,7 +8,7 @@ import datetime
 from utils.logger import AppLogger
 
 
-class SearchSpaceError(Exception):
+class SearchSpaceError( Exception):
     """
     Main class that handles the errors occurred.
     """
@@ -35,12 +35,10 @@ class SearchSpaceError(Exception):
              Logs the errors using the AppLogger.
 
         """
-        log_string = '"error":"{}","error_type":"{}","user":"{}","log_action":"{}",' \
+        log_string = '"error":"{}","error_type":"{}"' \
                      '"error_description":"{}","status":"{}", "time_stamp": "{}"'.format(
             str(self.err).replace('"', "'"),
             str(self.error_type).replace('"', "'"),
-            str(self.user),
-            str(self.action).replace('"', "'"),
             str(self.error_stack),
             str(self.status),
             str(self.now.strftime("%a, %d %b %Y %I:%M:%S %p"))

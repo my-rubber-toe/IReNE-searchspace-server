@@ -136,7 +136,4 @@ dmypy.json
 _build/
 Documentation/_static/
 Documentation/_templates/
-Documentation/conf.py
-Documentation/index.rst
-make.bat
-Makefile
+node_modules/isarray/Makefile

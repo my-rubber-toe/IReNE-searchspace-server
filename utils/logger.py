@@ -44,4 +44,4 @@ class AppLogger:
                 message
                     message string to log
         """
-        self.logger.error(message=message, exc_info=True)
+        self.logger.error(msg=message, exc_info=True)
