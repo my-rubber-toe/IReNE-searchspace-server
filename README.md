@@ -128,6 +128,10 @@ In order to generate the documentation, run the following command on the root di
 ```
 make html
 ```
+or in Windows
+```
+.\make html
+```
 Go to Documentation\_build\html\index.html to see the generated documentation
 ## Built With
 
