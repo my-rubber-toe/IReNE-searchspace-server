@@ -50,8 +50,10 @@ def request_access():
 
     # Verify that the token was indeed issued by google accounts and that the token was issued for the collaborator
     # email.
-    if id_info['iss'] != 'accounts.google.com' or id_info['email'] != email:
+    if id_info['iss'] != 'accounts.google.com':
         raise SearchSpaceRequestValidationError(msg="Wrong issuer. Token issuer is not Google.", status=400)
+    if id_info['email'] != email:
+        raise SearchSpaceRequestValidationError(msg="Token was not issued for this email", status=400)
     try:
         post_access_request(first_name=first_name, last_name=last_name, email=email)
         return ApiResult(

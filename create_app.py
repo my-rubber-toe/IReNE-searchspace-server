@@ -11,7 +11,7 @@ from flask_cors import CORS
 from werkzeug.utils import find_modules, import_string
 
 from DAOs.init_db import register_database
-from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError
+from utils.exceptions import SearchSpaceApiError, SearchSpaceRequestError, SearchSpaceRequestValidationError
 from utils.responses import ApiException, ApiResult
 from utils.scheduled_jobs import ScheduledJobs
 #
@@ -60,7 +60,6 @@ class ApiFlask(Flask):
             # Set all variables from the config file passed as a parameter
             self.config.from_object(config or {})
 
-            # TODO: Setup CORS for all endpoints
             self.register_cors()
 
             # Setup blueprints to establish all endpoint routes
@@ -128,6 +127,14 @@ class ApiFlask(Flask):
                 )
 
             @self.errorhandler(SearchSpaceRequestError)
+            def handle_request_error(error):
+                return ApiException(
+                    error_type=error.error_type,
+                    message=error.msg,
+                    status=error.status
+                )
+
+            @self.errorhandler(SearchSpaceRequestValidationError)
             def handle_request_error(error):
                 return ApiException(
                     error_type=error.error_type,
