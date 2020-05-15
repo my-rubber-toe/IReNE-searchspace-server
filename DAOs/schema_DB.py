@@ -1,6 +1,7 @@
 from mongoengine import *
 import json
 
+
 class collaborator(Document):
     """
         Document Class for Collaborators.
@@ -18,11 +19,14 @@ class collaborator(Document):
             - banned: <Boolean> <Default=False> When set to true, the Collaborator looses access to Tellspace service.
             - approved: <Boolean> <Default=False>  When set to true, the Collaborator gains access to Tellspace service.
     """
-    first_name = StringField(min_length=1, max_length=30, required=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')
-    last_name = StringField(min_length=1, max_length=60, required=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')
-    email = EmailField(min_length= 9,max_length=70, required=True, unique=True, regex='^[\.a-z0-9]*(@upr\.edu)$')
-    banned = BooleanField(default=False,required=True)
-    approved = BooleanField(default=False,required=True)
+    first_name = StringField(min_length=1, max_length=30, required=True,
+                             regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')
+    last_name = StringField(min_length=1, max_length=60, required=True,
+                            regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')
+    email = EmailField(min_length=9, max_length=70, required=True, unique=True, regex='^[\.a-z0-9]*(@upr\.edu)$')
+    banned = BooleanField(default=False, required=True)
+    approved = BooleanField(default=False, required=True)
+
 
 class admin(Document):
     """
@@ -260,16 +264,24 @@ class document_case(Document):
                 - max_length: 5
     """
     creatoriD = ReferenceField('collaborator')
-    title = StringField(min_length=10, max_length = 100, required=True, unique=True, regex="^([A-ZÁÉÍÓÚÑÜ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)")
-    language = StringField(min_length=1, max_length=20,required=True, regex="^[A-Z][a-z]*$")
-    description = StringField(min_length=1, max_length=500,required=False)
-    published = BooleanField(default=True,required=True)
-    incidentDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    creationDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    lastModificationDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    tagsDoc = ListField(StringField(min_length=1,max_length=50, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), required=False, max_length=10)
-    infrasDocList = ListField(StringField(min_length=1,max_length=50,required=True, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),min_length=1)
-    damageDocList = ListField(StringField(min_length=1,max_length=50,required=True, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),min_length=1)
+    title = StringField(min_length=10, max_length=100, required=True, unique=True,
+                        regex="^([A-ZÁÉÍÓÚÑÜ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)")
+    language = StringField(min_length=1, max_length=20, required=True, regex="^[A-Z][a-z]*$")
+    description = StringField(min_length=1, max_length=500, required=False)
+    published = BooleanField(default=True, required=True)
+    incidentDate = StringField(min_length=9, max_length=11, required=True,
+                               regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    creationDate = StringField(min_length=9, max_length=11, required=True,
+                               regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    lastModificationDate = StringField(min_length=9, max_length=11, required=True,
+                                       regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    tagsDoc = ListField(
+        StringField(min_length=1, max_length=50, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),
+        required=False, max_length=10)
+    infrasDocList = ListField(StringField(min_length=1, max_length=50, required=True, unique=True,
+                                          regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), min_length=1)
+    damageDocList = ListField(StringField(min_length=1, max_length=50, required=True, unique=True,
+                                          regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), min_length=1)
     location = ListField(EmbeddedDocumentField(location), max_length=5, required=False)
     author = ListField(EmbeddedDocumentField(author), min_length=1, max_length=10, required=True)
     actor = ListField(EmbeddedDocumentField(actor),min_length=1, max_length=5, required=True)
@@ -333,16 +345,24 @@ class creation_embedded(EmbeddedDocument):
                 - max_length: 5
     """
     creatoriD = ReferenceField('collaborator')
-    title = StringField(min_length=10, max_length = 100, required=True, unique=True, regex="^([A-ZÁÉÍÓÚÑÜ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)")
-    language = StringField(min_length=1, max_length=20,required=True, regex="^[A-Z][a-z]*$")
-    description = StringField(min_length=1, max_length=500,required=False)
-    published = BooleanField(default=True,required=True)
-    incidentDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    creationDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    lastModificationDate = StringField(min_length=9, max_length=11, required=True, regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
-    tagsDoc = ListField(StringField(min_length=1,max_length=50, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), required=False, max_length=10)
-    infrasDocList = ListField(StringField(min_length=1,max_length=50,required=True, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),min_length=1)
-    damageDocList = ListField(StringField(min_length=1,max_length=50,required=True, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),min_length=1)
+    title = StringField(min_length=10, max_length=100, required=True, unique=True,
+                        regex="^([A-ZÁÉÍÓÚÑÜ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9À-ÿ]$)")
+    language = StringField(min_length=1, max_length=20, required=True, regex="^[A-Z][a-z]*$")
+    description = StringField(min_length=1, max_length=500, required=False)
+    published = BooleanField(default=True, required=True)
+    incidentDate = StringField(min_length=9, max_length=11, required=True,
+                               regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    creationDate = StringField(min_length=9, max_length=11, required=True,
+                               regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    lastModificationDate = StringField(min_length=9, max_length=11, required=True,
+                                       regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    tagsDoc = ListField(
+        StringField(min_length=1, max_length=50, unique=True, regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'),
+        required=False, max_length=10)
+    infrasDocList = ListField(StringField(min_length=1, max_length=50, required=True, unique=True,
+                                          regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), min_length=1)
+    damageDocList = ListField(StringField(min_length=1, max_length=50, required=True, unique=True,
+                                          regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), min_length=1)
     location = ListField(EmbeddedDocumentField(location), max_length=5, required=False)
     author = ListField(EmbeddedDocumentField(author), min_length=1, max_length=10, required=True)
     actor = ListField(EmbeddedDocumentField(actor),min_length=1, max_length=5, required=True)
@@ -576,8 +596,9 @@ class tag_embedded(EmbeddedDocument):
                 - For list:
                     -  max_length: 10
     """
-    tagsDoc = ListField(StringField(min_length=0,max_length=50,
-        regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), required=False, max_length=10)
+    tagsDoc = ListField(StringField(min_length=0, max_length=50,
+                                    regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z À-ÿ / & , \- ]*$'), required=False, max_length=10)
+
     def to_json(self):
         return self.tagsDoc
 
@@ -642,16 +663,16 @@ class document_case_revision(Document):
     """
     creatorId = ReferenceField('collaborator')
     docId = ReferenceField('document_case')
-    creator_name = StringField(min_length=1, max_length=90, required=True, 
-        regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- À-ÿ]*[a-záéíóúñü]$')
-    creator_email = EmailField(required=True,min_length=9, max_length=50, regex='^[\.a-z0-9]*(@upr\.edu)$')
-    document_title = StringField(min_length=10, max_length = 100, required=True, 
-        regex="^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9áéíóú]$)")
-    revision_date = StringField(min_length=9, max_length=11, required=True, 
-        regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
+    creator_name = StringField(min_length=1, max_length=90, required=True,
+                               regex='^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- À-ÿ]*[a-záéíóúñü]$')
+    creator_email = EmailField(required=True, min_length=9, max_length=50, regex='^[\.a-z0-9]*(@upr\.edu)$')
+    document_title = StringField(min_length=10, max_length=100, required=True,
+                                 regex="^([A-ZÁÉÍÓÚ]+)([A-Z a-z 0-9 À-ÿ : \-]*)([A-Za-z0-9áéíóú]$)")
+    revision_date = StringField(min_length=9, max_length=11, required=True,
+                                regex='[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')
     revision_number = IntField(min_value=0, required=True)
-    revision_type = StringField(min_length=1, max_length= 20, required=True, 
-        regex='^[a-z A-Z \- À-ÿ]*[a-záéíóúñü]$')
+    revision_type = StringField(min_length=1, max_length=20, required=True,
+                                regex='^[a-z A-Z \- À-ÿ]*[a-záéíóúñü]$')
     field_changed = EmbeddedDocumentField(fields_embedded)
     
 
