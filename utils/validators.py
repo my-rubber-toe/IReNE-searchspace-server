@@ -26,13 +26,13 @@ class GetCollaboratorRequestValidator(Schema):
         validate.Regexp('^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')
         ])
     lastName = fields.String(required=True, validate=[
-        validate.Length(min=1, max=30),
+        validate.Length(min=1, max=60),
         validate.Regexp('^[A-ZÁÉÍÓÚÑÜ][a-z A-Z \- . À-ÿ]*[a-zA-Z.À-ÿ]$')])
     email = fields.Email(
         required=True,
         validate=[
             validate.Regexp('^[\.a-z0-9]*(@upr\.edu)$'),
-            validate.Length(max=70)
+            validate.Length(min=9, max=70)
         ]
     )
     idToken = fields.String(required=True)
