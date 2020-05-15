@@ -1,4 +1,4 @@
 Collaborator Request Blueprint
 ===============================
-.. automodule:: blueprints.collabrequest
+.. automodule:: collabrequest
    :members:

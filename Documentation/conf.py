@@ -12,14 +12,16 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../DAOs'))
+sys.path.insert(0, os.path.abspath('../blueprints'))
+sys.path.insert(0, os.path.abspath('../utils'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'IReNE SearchSpace'
-copyright = '2020, Alejandro Vasquez'
-author = 'Alejandro Vasquez'
+copyright = '2020, Fab5'
+author = 'Fab5'
 
 # -- General configuration ---------------------------------------------------
 

@@ -15,3 +15,4 @@ Indices and tables
    blueprints
    utils
    create
+   daos
