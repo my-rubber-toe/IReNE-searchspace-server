@@ -49,11 +49,13 @@ def request_access():
         current_app.config['GOOGLE_OAUTH_CLIENT_ID'])
 
     # Verify that the token was indeed issued by google accounts and that the token was issued for the collaborator
-    # email.
+    # email. Also checks that the domain is upr.edu
     if id_info['iss'] != 'accounts.google.com':
         raise SearchSpaceRequestValidationError(msg="Wrong issuer. Token issuer is not Google.", status=400)
     if id_info['email'] != email:
         raise SearchSpaceRequestValidationError(msg="Token was not issued for this email", status=400)
+    if id_info['hd'] != 'upr.edu':
+        raise SearchSpaceRequestValidationError(msg="Domain is not upr.edu", status=400)
     try:
         post_access_request(first_name=first_name, last_name=last_name, email=email)
         return ApiResult(
