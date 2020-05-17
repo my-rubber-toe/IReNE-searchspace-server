@@ -71,11 +71,11 @@ GOOGLE_OAUTH_CLIENT_ID=<your-google-client-id>
 ### Running the application
 To run the application server just execute the following command on the root directory and with the virtual environment activated.
 ```
-python app.py
+python -m flask run
 ```
 or in Windows 10
 ```
-py app.py
+py -m flask run
 ```
 
 

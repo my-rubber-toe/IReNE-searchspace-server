@@ -3,9 +3,10 @@ import os
 # APP
 FLASK_APP = os.getenv("FLASK_APP")
 FLASK_ENV = os.getenv("FLASK_ENV")
-FLASK_DEBUG=os.getenv("FLASK_DEBUG")
+FLASK_DEBUG = os.getenv("FLASK_DEBUG")
 
 # Use this to fill app.run arguments when use it like this app.run(host='HOST', port=PORT,)
+HOST = os.getenv("HOST")
 PORT = os.getenv("PORT")
 
 # Database
