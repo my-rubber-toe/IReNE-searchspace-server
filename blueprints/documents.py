@@ -65,7 +65,6 @@ def get_document(doc_id):
     #  search in the DB for the document  #
     try:
         doc = get_doc(doc_id)
-        print(doc)
         creatorInfo = get_doc_creator(doc['creatoriD']['$oid'])
         doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
         doc['creatorEmail'] = (creatorInfo['email'])

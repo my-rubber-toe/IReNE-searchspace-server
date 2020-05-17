@@ -2,6 +2,7 @@
 collabrequest.py \n
 Routes that manage the creation of collaborators request
 """
+import marshmallow.exceptions
 from flask import Blueprint, request, current_app
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -36,8 +37,8 @@ def request_access():
     """
     try:
         body = GetCollaboratorRequestValidator().load(request.json)
-    except ():
-        raise SearchSpaceRequestValidationError(msg='Invalid Data', status=400)
+    except marshmallow.exceptions.ValidationError:
+        raise SearchSpaceRequestValidationError(msg='Invalid Email', status=400)
     first_name = body.get('firstName')
     last_name = body.get('lastName')
     email = body.get('email')
@@ -60,5 +61,5 @@ def request_access():
         return ApiResult(
             status=201,
             message='Valid Data')
-    except ():
+    except NotUniqueError:
         raise SearchSpaceRequestError(msg='Request already created', status=409)
