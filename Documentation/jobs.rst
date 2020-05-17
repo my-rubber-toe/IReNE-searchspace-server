@@ -1,4 +1,4 @@
 Jobs Scheduler
-===========================
-.. automodule:: utils.scheduled_jobs
+==============
+.. automodule:: scheduled_jobs
    :members:

@@ -1,4 +1,4 @@
 Visualizations Blueprint
-=========================
-.. automodule:: blueprints.visualizations
+========================
+.. automodule:: visualizations
    :members:

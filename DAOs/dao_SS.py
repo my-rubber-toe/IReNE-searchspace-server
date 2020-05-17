@@ -104,7 +104,7 @@ def get_timeline_docs():
     """
         Returns the list documents with the metadata necessary for 
     """
-    timeline_docs = document_case.objects(published=True).only('id', 'title', 'timeline', 'tagsDoc',
+    timeline_docs = document_case.objects(published=True).only('id', 'title', 'timeline',
     'infrasDocList', 'damageDocList')
     
     return json.loads(timeline_docs.to_json())

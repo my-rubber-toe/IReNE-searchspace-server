@@ -1,6 +1,5 @@
 """
-visualizations.py
-====================================
+visualizations.py \n
 Routes that manage retrieval of documents metadata for this features on Front End
 """
 from flask import Blueprint

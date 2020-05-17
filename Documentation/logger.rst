@@ -1,4 +1,4 @@
 Logger
-===============================
-.. automodule:: utils.logger
+======
+.. automodule:: logger
    :members:

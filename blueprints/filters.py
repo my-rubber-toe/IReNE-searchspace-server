@@ -1,6 +1,5 @@
 """
-filters.py
-====================================
+filters.py \n
 Routes that manage retrieval of filters options to use on Front End
 """
 from flask import Blueprint

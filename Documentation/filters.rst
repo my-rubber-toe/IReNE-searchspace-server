@@ -1,4 +1,4 @@
 Filters Blueprint
-====================
-.. automodule:: blueprints.filters
+=================
+.. automodule:: filters
    :members:

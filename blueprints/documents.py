@@ -1,6 +1,5 @@
 """
-documents.py
-====================================
+documents.py \n
 Routes that manage retrieval of documents for /documents route on Front End
 """
 from flask import Blueprint, request

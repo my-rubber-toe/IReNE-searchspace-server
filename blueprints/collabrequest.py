@@ -1,6 +1,5 @@
 """
-collabrequest.py
-====================================
+collabrequest.py \n
 Routes that manage the creation of collaborators request
 """
 from flask import Blueprint, request, current_app

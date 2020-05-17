@@ -1,6 +1,5 @@
 """
-app.py
-=======
+app.py \n
 Main file that runs the application.
 """
 from create_app import ApiFlask

@@ -1,4 +1,4 @@
 Validators
-=========================
-.. automodule:: utils.validators
+==========
+.. automodule:: validators
    :members:

@@ -1,4 +1,4 @@
 Responses Maker
-===========================
-.. automodule:: utils.responses
+===============
+.. automodule:: responses
    :members:

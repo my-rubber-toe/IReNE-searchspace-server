@@ -1,6 +1,5 @@
 """
-create_app.py
-====================================
+create_app.py \n
 Holds the configuration functions for blueprints, routes, cors, error catching and much more.
 """
 import inspect

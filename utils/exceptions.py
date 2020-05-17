@@ -1,6 +1,5 @@
 """
-exceptions.py
-=============
+exceptions.py \n
 Handles the errors occurred.
 """
 

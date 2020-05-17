@@ -1,6 +1,5 @@
 """
-responses.py
-=============
+responses.py \n
     Classes to standardize the response methods. Improves the ease of debugging.
 """
 

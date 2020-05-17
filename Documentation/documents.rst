@@ -1,4 +1,4 @@
 Documents Blueprint
-====================
-.. automodule:: blueprints.documents
+===================
+.. automodule:: documents
    :members:

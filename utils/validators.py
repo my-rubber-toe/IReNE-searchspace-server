@@ -1,6 +1,5 @@
 """
-validators.py
-=============
+validators.py \n
 Handles the validations for the request using marshmallow.
 """
 from marshmallow import validate, Schema, fields

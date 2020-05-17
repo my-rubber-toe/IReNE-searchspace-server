@@ -1,4 +1,4 @@
 Exceptions Handler
-====================
-.. automodule:: utils.exceptions
+==================
+.. automodule:: exceptions
    :members:
