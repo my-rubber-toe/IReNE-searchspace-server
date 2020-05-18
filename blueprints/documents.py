@@ -24,14 +24,7 @@ def list_documents():
 
     """
     if request.method == 'GET':
-        docs = get_docs()
-        for doc in docs:
-            doc['authorFullName'] = []
-            for author in doc['author']:
-                doc['authorFullName'].append(
-                    author['author_FN'] + " " + author['author_LN'])
-            creatorInfo = get_doc_creator(doc['creatoriD']['$oid'])
-            doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
+        docs = json.loads(get_docs())
         return ApiResult(
             message=docs
         )
@@ -64,10 +57,7 @@ def get_document(doc_id):
     """
     #  search in the DB for the document  #
     try:
-        doc = get_doc(doc_id)
-        creatorInfo = get_doc_creator(doc['creatoriD']['$oid'])
-        doc['creatorFullName'] = (creatorInfo['first_name'] + " " + creatorInfo['last_name'])
-        doc['creatorEmail'] = (creatorInfo['email'])
+        doc = json.loads(get_doc(doc_id))
         return ApiResult(
             message=doc
         )
