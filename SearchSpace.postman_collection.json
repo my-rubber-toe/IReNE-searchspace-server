@@ -1,1235 +1,1307 @@
 {
 	"info": {
-		"_postman_id": "1603e35e-b7ac-4cd7-b370-945383eabeef",
+		"_postman_id": "4a023eb6-8b48-4427-91a3-a6c432187b5e",
 		"name": "SearchSpace",
 		"description": "Tests for the SearchSpace server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "collab-request Invalid Method",
-			"event": [
+			"name": "Collaborator Request",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "collab-request",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
-							"});",
-							"pm.test(\"Data send it was valid\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.message).to.eql(\"Valid Data\");",
-							"});",
-							"postman.setNextRequest('duplicate collab-request')"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomUserName}}@upr.edu\"));",
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"{{email}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "collab-request Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, last name and email from upr.edu of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "collab-request Invalid Last Name",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in Last Name\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"'last_name':\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});",
-							"pm.test(\"Last Name is too long\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'Length must be between 1 and 30.\\'\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomUserName}}@upr.edu\"));",
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}\",\n    \"email\": \"{{email}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "collab-request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"pm.test(\"Data send it was valid\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Valid Data\");",
+									"});",
+									"postman.setNextRequest('duplicate collab-request')"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{first_name}}.{{last_name}}@upr.edu\").toLowerCase());",
+									"pm.environment.set(\"first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, invalid last name and email from upr.edu of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "collab-request Invalid Name",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in First Name\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"'first_name':\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});",
-							"pm.test(\"First Name is too long\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'Length must be between 1 and 30.\\'\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"email\": \"{{email}}\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, last name and email from upr.edu of the applicant"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomUserName}}@upr.edu\"));",
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"{{email}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "collab-request Invalid Last Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in Last Name\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"'lastName':\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});",
+									"pm.test(\"Last Name is too long\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'Length must be between 1 and 30.\\'\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomUserName}}@upr.edu\").toLowerCase());",
+									"pm.environment.set(\"first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the invalid first name, last name and email from upr.edu of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "collab-request Invalid domain",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in Email\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"'email':\");",
-							"});",
-							"pm.test(\"Error is not match expected pattern\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"not match expected pattern\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}{{last_name}}\",\n    \"email\": \"{{email}}\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, invalid last name and email from upr.edu of the applicant"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));",
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"{{email}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "collab-request Invalid Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in First Name\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"'first_name':\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});",
+									"pm.test(\"First Name is too long\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'Length must be between 1 and 30.\\'\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomUserName}}@upr.edu\").toLowerCase());",
+									"pm.environment.set(\"first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, last name and email not from upr.edu of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "duplicate collab-request",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in Request\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestError:\");",
-							"});",
-							"pm.test(\"Error is Duplicate Request\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'Tried to save duplicate\");",
-							"});",
-							"pm.test(\"Message is Request already created\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Msg:Request already created\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"{{email}}\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the invalid first name, last name and email from upr.edu of the applicant"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"{{email}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "collab-request Invalid domain",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in Email\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"'email':\");",
+									"});",
+									"pm.test(\"Error is not match expected pattern\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"not match expected pattern\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\").toLowerCase());",
+									"pm.environment.set(\"first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, last name and email of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "invalid email collab-request",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in Email\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'email\\':\");",
-							"});",
-							"pm.test(\"Error is not match expected pattern\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"not match expected pattern\");",
-							"});",
-							"pm.test(\"Email is invalid\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'Not a valid email address.\\'\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"email\": \"{{email}}\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, last name and email not from upr.edu of the applicant"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"Hulda_Prohaska91upr.edu\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "duplicate collab-request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in Request\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestError:\");",
+									"});",
+									"pm.test(\"Error is Duplicate Request\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Tried to save duplicate\");",
+									"});",
+									"pm.test(\"Message is Request already created\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Msg:Request already created\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
-				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, last name and email of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "invalid length email collab-request ",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51170974-8e32-4171-b675-091c9de4ac30",
-						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
-							"});",
-							"pm.test(\"Error is in Email\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'email\\':\");",
-							"});",
-							"pm.test(\"Error is a Validation Error\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
-							"});",
-							"pm.test(\"Email is too long\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"\\'Longer than maximum length 50.\\'\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"email\": \"{{email}}\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, last name and email of the applicant"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
-						"exec": [
-							"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-							"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"{{first_name}}\",\n    \"last_name\": \"{{last_name}}\",\n    \"email\": \"Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111@upr.edu\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "invalid email collab-request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in Email\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'email\\':\");",
+									"});",
+									"pm.test(\"Error is not match expected pattern\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"not match expected pattern\");",
+									"});",
+									"pm.test(\"Email is invalid\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'Not a valid email address.\\'\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/collab-request/",
-					"host": [
-						"{{url}}"
 					],
-					"path": [
-						"collab-request",
-						""
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"email\": \"Hulda_Prohaska91upr.edu\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, last name and email of the applicant"
+					},
+					"response": []
 				},
-				"description": "Create a request of collaboration in SearchSpace with the first name, last name and invalid length email of the applicant"
-			},
-			"response": []
-		},
-		{
-			"name": "documents",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "5b6cf61c-15f1-412b-8f91-75553ef50fae",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});",
-							"pm.environment.set(\"docid\", pm.response.json().message[0]._id.$oid);",
-							"postman.setNextRequest('view document')"
-						],
-						"type": "text/javascript"
-					}
-				},
+					"name": "invalid length email collab-request ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51170974-8e32-4171-b675-091c9de4ac30",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Error is in Email\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'email\\':\");",
+									"});",
+									"pm.test(\"Error is a Validation Error\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"SearchSpaceRequestValidationError\");",
+									"});",
+									"pm.test(\"Email is too long\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\'Longer than maximum length 50.\\'\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d06bcbdb-6921-4929-81f9-8e39c8e20bbd",
+								"exec": [
+									"pm.environment.set(\"first_name\",pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.environment.set(\"last_name\",pm.variables.replaceIn(\"{{$randomLastName}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"email\": \"Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111Hulda_Prohaska9111111111111111111111111111111@upr.edu\",\n    \"idToken\": \"{{gtoken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/collab-request/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"collab-request",
+								""
+							]
+						},
+						"description": "Create a request of collaboration in SearchSpace with the first name, last name and invalid length email of the applicant"
+					},
+					"response": []
+				}
+			],
+			"description": "These are the routes to test the creation of a collaborator request.",
+			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c35207ba-712d-443b-8bb2-7f7e93b83b08",
+						"id": "fb114aa8-f4d5-4734-8f52-8d5ece8fe561",
+						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"type": "text/javascript"
+						]
 					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/documents",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"documents"
-					]
 				},
-				"description": "View all documents"
-			},
-			"response": []
-		},
-		{
-			"name": "documents Invalid Method",
-			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5b6cf61c-15f1-412b-8f91-75553ef50fae",
+						"id": "35fbf4f4-a66d-457b-85f6-d51de87b9616",
+						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
 							""
-						],
-						"type": "text/javascript"
+						]
 					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "documents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b6cf61c-15f1-412b-8f91-75553ef50fae",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"pm.environment.set(\"docid\", pm.response.json().message[0]._id.$oid);",
+									"postman.setNextRequest('view document')"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c35207ba-712d-443b-8bb2-7f7e93b83b08",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"documents"
+							]
+						},
+						"description": "View all documents"
+					},
+					"response": []
 				},
+				{
+					"name": "documents Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b6cf61c-15f1-412b-8f91-75553ef50fae",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c35207ba-712d-443b-8bb2-7f7e93b83b08",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"documents"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "view document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af284c23-1a39-42a8-995f-6284bdbd105b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7a69f61-3031-419f-8145-e3b53b3f97fd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/documents/view/{{docid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"documents",
+								"view",
+								"{{docid}}"
+							]
+						},
+						"description": "View on document by id"
+					},
+					"response": []
+				},
+				{
+					"name": "view document Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af284c23-1a39-42a8-995f-6284bdbd105b",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7a69f61-3031-419f-8145-e3b53b3f97fd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/documents/view/{{docid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"documents",
+								"view",
+								"{{docid}}"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				}
+			],
+			"description": "These are the routes to test the retrieval of document metadata and to get a complete document.",
+			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c35207ba-712d-443b-8bb2-7f7e93b83b08",
+						"id": "3d487fc0-e950-4f7a-8f17-719acee87b30",
+						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"type": "text/javascript"
+						]
 					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/documents",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"documents"
-					]
 				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "view document",
-			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "af284c23-1a39-42a8-995f-6284bdbd105b",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "e7a69f61-3031-419f-8145-e3b53b3f97fd",
+						"id": "467fb82c-0385-4b12-9f18-31bbe7ec1862",
+						"type": "text/javascript",
 						"exec": [
 							""
-						],
-						"type": "text/javascript"
+						]
 					}
 				}
 			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/documents/view/{{docid}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"documents",
-						"view",
-						"{{docid}}"
-					]
-				},
-				"description": "View on document by id"
-			},
-			"response": []
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "view document Invalid Method",
-			"event": [
+			"name": "Visualizations",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "af284c23-1a39-42a8-995f-6284bdbd105b",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
+					"name": "visualize timeline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "43d46224-c93b-4209-ad56-5000c0e5010f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/timeline",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"timeline"
+							]
+						},
+						"description": "Request information needed of all documents to create  the timeline graph"
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "e7a69f61-3031-419f-8145-e3b53b3f97fd",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
+					"name": "visualize timeline Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "43d46224-c93b-4209-ad56-5000c0e5010f",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/timeline",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"timeline"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "visualize x vs y",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/comparison-graph",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"comparison-graph"
+							]
+						},
+						"description": "Request information needed of all documents to create  the comparison graph"
+					},
+					"response": []
+				},
+				{
+					"name": "visualize x vs y Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/comparison-graph",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"comparison-graph"
+							]
+						},
+						"description": "Use a invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "visualize map",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/map",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"map"
+							]
+						},
+						"description": "Request information needed of all documents to create  the comparison graph"
+					},
+					"response": []
+				},
+				{
+					"name": "visualize map Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/visualize/map",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"visualize",
+								"map"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/documents/view/{{docid}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"documents",
-						"view",
-						"{{docid}}"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
+			"description": "These are the routes to test the retrieval of document metadata for visualization services.",
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "visualize timeline",
-			"event": [
+			"name": "Filters",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "43d46224-c93b-4209-ad56-5000c0e5010f",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"name": "filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								""
+							]
+						},
+						"description": "Request the info to fill the filters in UI"
+					},
+					"response": []
+				},
+				{
+					"name": "filters Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								""
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "damage filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/damages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"damages"
+							]
+						},
+						"description": "Request the info to fill the damage filter in UI"
+					},
+					"response": []
+				},
+				{
+					"name": "damage filters Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/damages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"damages"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "infrastructure filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/infrastructures",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"infrastructures"
+							]
+						},
+						"description": "Request the info to fill the infrastructure filter in UI"
+					},
+					"response": []
+				},
+				{
+					"name": "infrastructure filters Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/infrastructures",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"infrastructures"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "tags filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/tags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"tags"
+							]
+						},
+						"description": "Request the info to fill the tags filter in UI"
+					},
+					"response": []
+				},
+				{
+					"name": "tags filters Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/tags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"tags"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
+				},
+				{
+					"name": "authors filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response is a JSON\", function(){",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"authors"
+							]
+						},
+						"description": "Request the info to fill the authors filter in UI"
+					},
+					"response": []
+				},
+				{
+					"name": "authors filters Invalid Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
+								"exec": [
+									"pm.test(\"Invalid Method Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/filters/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"filters",
+								"authors"
+							]
+						},
+						"description": "Test invalid method"
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/timeline",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"timeline"
-					]
-				},
-				"description": "Request information needed of all documents to create  the timeline graph"
-			},
-			"response": []
-		},
-		{
-			"name": "visualize timeline Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "43d46224-c93b-4209-ad56-5000c0e5010f",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/timeline",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"timeline"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "visualize x vs y",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/comparison-graph",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"comparison-graph"
-					]
-				},
-				"description": "Request information needed of all documents to create  the comparison graph"
-			},
-			"response": []
-		},
-		{
-			"name": "visualize x vs y Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/comparison-graph",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"comparison-graph"
-					]
-				},
-				"description": "Use a invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "visualize map",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/map",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"map"
-					]
-				},
-				"description": "Request information needed of all documents to create  the comparison graph"
-			},
-			"response": []
-		},
-		{
-			"name": "visualize map Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ee4c5536-dc18-402c-aef2-6010fbb68173",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/visualize/map",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"visualize",
-						"map"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "filters",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						""
-					]
-				},
-				"description": "Request the info to fill the filters in UI"
-			},
-			"response": []
-		},
-		{
-			"name": "filters Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						""
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "damage filters",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/damages",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"damages"
-					]
-				},
-				"description": "Request the info to fill the damage filter in UI"
-			},
-			"response": []
-		},
-		{
-			"name": "damage filters Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/damages",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"damages"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "infrastructure filters",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/infrastructures",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"infrastructures"
-					]
-				},
-				"description": "Request the info to fill the infrastructure filter in UI"
-			},
-			"response": []
-		},
-		{
-			"name": "infrastructure filters Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/infrastructures",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"infrastructures"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "tags filters",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/tags",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"tags"
-					]
-				},
-				"description": "Request the info to fill the tags filter in UI"
-			},
-			"response": []
-		},
-		{
-			"name": "tags filters Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/tags",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"tags"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
-		},
-		{
-			"name": "authors filters",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Response is a JSON\", function(){",
-							"    pm.response.to.have.jsonBody();",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/authors",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"authors"
-					]
-				},
-				"description": "Request the info to fill the authors filter in UI"
-			},
-			"response": []
-		},
-		{
-			"name": "authors filters Invalid Method",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0911a8d7-be95-4d84-9dc5-04999fa8b558",
-						"exec": [
-							"pm.test(\"Invalid Method Status code is 405\", function () {",
-							"    pm.response.to.have.status(405);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/filters/authors",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"filters",
-						"authors"
-					]
-				},
-				"description": "Test invalid method"
-			},
-			"response": []
+			"description": "These are the routes to test the retrieval of filters options",
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [

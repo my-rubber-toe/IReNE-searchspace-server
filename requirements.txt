@@ -1,3 +1,7 @@
+sphinx
+bson
+namegenerator
+names
 mongomock
 mongoengine
 flask
@@ -6,3 +10,7 @@ werkzeug
 commitizen
 marshmallow
 python-dotenv
+gunicorn
+google
+google-auth
+requests

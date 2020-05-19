@@ -1,19 +1,10 @@
-from create_app import create_app
-'''
-To run this server in development
-    $ export FLASK_APP=`pwd`/run.py
-    $ export FLASK_DEBUG=1
-creating flask app instance
+"""
+app.py \n
+Main file that runs the application.
+"""
+from create_app import ApiFlask
 
-parameters could be
-    config.development
-    config.testing
-    config.production
+app = ApiFlask(__name__).create_app('config.environment')
 
-depending on that input the app will be initialized with the
-corresponding database queries files and database driver
-'''
-# Search for the config file and add it to the
-app = create_app('config.development')
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='localhost', port=app.config['PORT'], debug=app.config['FLASK_DEBUG'])

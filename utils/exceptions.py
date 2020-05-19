@@ -1,15 +1,20 @@
+"""
+exceptions.py \n
+Handles the errors occurred.
+"""
+
 import datetime
-import logging
-
-logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger('SearchSpaceLogger')
+from utils.logger import AppLogger
 
 
-class SearchSpaceError(Exception):
-    """Base Audit Manager Error Class"""
-    error_type = 'SearchSpaceError'
+class SearchSpaceError( Exception):
+    """
+    Main class that handles the errors occurred.
+    """
+    error_type = 'SearchSpace Error'
 
     def __init__(self, err=None, msg='Error', status=500, user='', action=None):
+        self.logger = AppLogger()
         self.msg = msg
         self.status = status
         if err:
@@ -25,38 +30,45 @@ class SearchSpaceError(Exception):
         self.log()
 
     def log(self):
-        log_string = '"error":"{}","error_type":"{}","user":"{}","log_action":"{}",'\
+        """
+             Logs the errors using the AppLogger.
+
+        """
+        log_string = '"error":"{}","error_type":"{}"' \
                      '"error_description":"{}","status":"{}", "time_stamp": "{}"'.format(
             str(self.err).replace('"', "'"),
             str(self.error_type).replace('"', "'"),
-            str(self.user),
-            str(self.action).replace('"', "'"),
             str(self.error_stack),
             str(self.status),
             str(self.now.strftime("%a, %d %b %Y %I:%M:%S %p"))
         )
 
         log_string = '{' + log_string + '},\n'
-
-        # TODO: implement buffer
-        with open('error_logs.log', 'a+') as f:
-            f.write(log_string)
+        self.logger.log_error(log_string)
 
     def __str__(self):
+        """
+        Turns the error object into a string.
+
+        Returns
+        -------
+        string
+            String representing the error object.
+        """
         return f'\nApplication is in DEBUG MODE:\nError Pretty Print:\n\tType:{self.error_type}; Msg:{self.msg}; Status:{self.status}; ' \
                f'ErrStackTrace:{self.error_stack}'
 
 
 class SearchSpaceApiError(SearchSpaceError):
-    """Audit Manager API error"""
-    error_type = 'SearchSpaceApiError'
+    """Class for errors occurred during runtime of the server"""
+    error_type = 'SearchSpace Api Error'
 
 
 class SearchSpaceRequestValidationError(SearchSpaceError):
-    """Audit Manager API error"""
-    error_type = 'SearchSpaceRequestValidationError'
+    """Class for errors occurred because a Validation error"""
+    error_type = 'SearchSpace Request Validation Error'
 
 
 class SearchSpaceRequestError(SearchSpaceError):
-    """Audit Manager API error"""
-    error_type = 'SearchSpaceRequestError'
+    """Class for errors occurred because a bad request error"""
+    error_type = 'SearchSpace Request Error'

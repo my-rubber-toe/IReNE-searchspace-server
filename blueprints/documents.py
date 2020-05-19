@@ -1,16 +1,21 @@
+"""
+documents.py \n
+Routes that manage retrieval of documents for /documents route on Front End
+"""
 from flask import Blueprint, request
-from utils.exceptions import SearchSpaceRequestError
-from utils.responses import ApiResult
-from mongoengine.errors import DoesNotExist, ValidationError
+
 from DAOs.dao_SS import *
+from utils.exceptions import SearchSpaceRequestError, SearchSpaceApiError
+from utils.responses import ApiResult
 
-bp = Blueprint('documents', __name__, url_prefix='/api/documents/')
+bp = Blueprint('documents', __name__, url_prefix='/documents/')
 
-#TODO verify sessions
+
 @bp.route('/', methods=['GET'])
 def list_documents():
     """
-    GET request to return the metadata of all documents.
+    GET request to return the metadata of all documents for /documents route on FE sending only the parts of the
+    documents that are needed. This reduced the size to transfer.
 
     Returns
     -------
@@ -19,17 +24,18 @@ def list_documents():
 
     """
     if request.method == 'GET':
-        docs = get_docs()
+        docs = json.loads(get_docs())
         return ApiResult(
             message=docs
         )
+    raise SearchSpaceApiError(msg="Invalid Method", status=405)
 
 
 @bp.route('/view/<string:doc_id>', methods=['GET'])
 def get_document(doc_id):
     """
 
-    GET request to return all the information about a specific document.
+    GET request to return all the information about a specific document. This route is to retrieve the entire document.
 
     Parameters
     ----------
@@ -39,7 +45,7 @@ def get_document(doc_id):
     Returns
     -------
     Message: json
-        Information of the requested document and status code 200.
+        All Information of the requested document and status code 200.
 
     Raises
     ------
@@ -51,9 +57,9 @@ def get_document(doc_id):
     """
     #  search in the DB for the document  #
     try:
+        doc = json.loads(get_doc(doc_id))
         return ApiResult(
-            message=get_doc(doc_id)
+            message=doc
         )
-    except (DoesNotExist, ValidationError) as e:
-        raise SearchSpaceRequestError(err=e, msg="Invalid Id", status=409)
-
+    except():
+        raise SearchSpaceRequestError(msg="Invalid Request", status=400)

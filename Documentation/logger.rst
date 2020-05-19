@@ -1,0 +1,4 @@
+Logger
+======
+.. automodule:: logger
+   :members:
